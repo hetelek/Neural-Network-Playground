@@ -27,7 +27,7 @@ public class Matrix: ExpressibleByArrayLiteral, CustomStringConvertible, Collect
         
         for row in 0..<rows {
             for col in 0..<columns {
-                elements[row][col] = Double.random()
+                elements[row][col] = Double.randomNormal()
             }
         }
     }

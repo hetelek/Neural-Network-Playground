@@ -1,7 +1,14 @@
 import Foundation
 
 extension Double {
-    static func random(mean: Float = 0, deviation: Float = 1) -> Double {
-        return Double(arc4random_uniform(200)) / 200.0
+    // FROM: http://mathworld.wolfram.com/Box-MullerTransformation.html
+    static func randomNormal() -> Double {
+        let random1 = Double(arc4random()) / Double(UInt32.max)
+        let random2 = Double(arc4random()) / Double(UInt32.max)
+        
+        let f1 = sqrt(-2 * log(random1))
+        let f2 = 2 * M_PI * random2
+        
+        return f1 * cos(f2)
     }
 }
