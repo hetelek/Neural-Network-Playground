@@ -10,11 +10,11 @@ public class Network {
         }
         
         layers.append(Matrix(rows: inputs, columns: first))
-        biases.append(Matrix(rows: 1, columns: first, repeating: 0))
+        biases.append(Matrix(rows: 1, columns: first, repeating: 0.1))
         
         for hiddenNeurons in structure.dropFirst() {
             layers.append(Matrix(rows: layers.last!.columns, columns: hiddenNeurons))
-            biases.append(Matrix(rows: 1, columns: hiddenNeurons, repeating: 0))
+            biases.append(Matrix(rows: 1, columns: hiddenNeurons, repeating: 0.1))
         }
     }
     
@@ -37,17 +37,16 @@ public class Network {
         let errors = calculateErrors(allActivations: allActivations, allSigmoidActivations: allSigmoidActivations, expectedOutput: expectedOutput)
         for index in 0..<errors.count {
             let layerErrors = errors[index]
-            let layerBiases = biases[index]
             let layer = layers[index]
             
+            let derivatives = layerErrors.transpose().elementwiseProduct(matrix: allActivations[index])
             for row in 0..<layer.rows {
                 for col in 0..<layer.columns {
-                    let weight = layer[row][col]
-                    layer[row][col] = weight + (weight * -η * layerErrors[col][0])
+                    layer[row][col] = layer[row][col] - (derivatives[0][col] * η)
                 }
             }
-            
-            biases[index] = layerBiases + layerErrors.transpose().elementMap { -η * $0 }
+
+            biases[index] = biases[index] - (layerErrors.transpose() * η)
         }
     }
     
@@ -58,9 +57,13 @@ public class Network {
         
         // layer errors
         var errors = [outputError]
-        for layer in layers.dropFirst().reversed() {
+        for index in (1..<layers.count).reversed() {
             let previousError = errors.last!
-            let newError = layer * previousError
+            let layer = layers[index]
+            let activation = allActivations[index - 1].transpose()
+            let activationSigmoidPrime = activation.elementMap(transform: Network.sigmoidDerivative)
+            
+            let newError = (layer * previousError).elementwiseProduct(matrix: activationSigmoidPrime)
             errors.append(newError)
         }
         
