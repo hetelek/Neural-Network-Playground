@@ -1,13 +1,17 @@
 import Foundation
 import XCPlayground
 
-let net = Network(inputs: 2, structure: [5, 1])!
-let inputs: [Double] = [1, 0]
-let outputs: [Double] = [1]
+let net = Network(inputs: 2, structure: [2, 1])!
+let inputs: [[Double]] = [[1, 1], [1, 0], [0, 1], [0, 0]]
+let outputs: [[Double]] = [[1], [1], [1], [0]]
 
 var cost: Double?
-for _ in 0...10000 {
-    print(net.feed(inputs: inputs))
-    cost = net.cost(inputs: inputs, expectedOutputs: outputs)
-    net.train(inputs: inputs, expectedOutputs: outputs, η: 0.01)
+for _ in 0...1000 {
+    for index in 0..<inputs.count {
+        print("got: \(net.feed(inputs: inputs[index])), expected: \(outputs[index])")
+    }
+    
+    cost = net.cost(inputs: inputs[0], expectedOutputs: outputs[0])
+    net.batchTrain(batchInputs: inputs, batchExpectedOutputs: outputs, η: 2)
+    print("-")
 }

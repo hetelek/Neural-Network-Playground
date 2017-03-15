@@ -30,6 +30,48 @@ public class Network {
         return (1.0 / (2.0 * 1)) * difference.sum()
     }
     
+    public func batchTrain(batchInputs: [[Double]], batchExpectedOutputs: [[Double]], η: Double) {
+        var derivativeSums: [Matrix] = []
+        var errorSums: [Matrix] = []
+
+        // calculate errors and derivatives for each sample
+        for batchIndex in 0..<batchInputs.count {
+            let inputs = batchInputs[batchIndex]
+            let expectedOutput: Matrix = [batchExpectedOutputs[batchIndex]]
+            let (allActivations, allSigmoidActivations) = internalFeed(inputs: inputs)
+            
+            let errors = calculateErrors(allActivations: allActivations, allSigmoidActivations: allSigmoidActivations, expectedOutput: expectedOutput)
+            for index in 0..<errors.count {
+                let layerErrors = errors[index]
+                
+                let derivatives = layerErrors.transpose().elementwiseProduct(matrix: allActivations[index])
+                if batchIndex == 0 {
+                    derivativeSums.append(derivatives)
+                    errorSums.append(layerErrors)
+                }
+                else {
+                    derivativeSums[index] = derivativeSums[index] + derivatives
+                    errorSums[index] = errorSums[index] + layerErrors
+                }
+            }
+        }
+        
+        // update the weights
+        for layerIndex in 0..<derivativeSums.count {
+            let layer = layers[layerIndex]
+            let derivativeAverage = derivativeSums[layerIndex] / Double(derivativeSums.count)
+            let errorAverage = errorSums[layerIndex] / Double(derivativeSums.count)
+            
+            for row in 0..<layer.rows {
+                for col in 0..<layer.columns {
+                    layer[row][col] = layer[row][col] - (derivativeAverage[0][col] * η)
+                }
+            }
+            
+            biases[layerIndex] = biases[layerIndex] - (errorAverage.transpose() * η)
+        }
+    }
+    
     public func train(inputs: [Double], expectedOutputs: [Double], η: Double) {
         let expectedOutput = Matrix(elements: [expectedOutputs])
         let (allActivations, allSigmoidActivations) = internalFeed(inputs: inputs)
