@@ -12,6 +12,16 @@ public class Network {
         return sigmoidValue * (1 - sigmoidValue)
     }
     
+    var cost: (Matrix, Matrix) -> Double = { calculated, expected in
+        let difference = (calculated - expected) ^ 2
+        let distanceFromExpected = sqrt(difference.sum())
+        let cost = pow(distanceFromExpected, 2) / 2
+        return cost
+    }
+    var costPrime: (Matrix, Matrix) -> Matrix = { calculated, expected in
+        return calculated - expected
+    }
+    
     public init?(inputs: Int, structure: [Int]) {
         guard let first = structure.first else {
             return nil
@@ -29,6 +39,27 @@ public class Network {
     public func feed(inputs: [Double]) -> Matrix {
         let (_, a) = internalFeed(inputs: inputs)
         return a.last!
+    }
+    
+    public func cost(batchInputs: [[Double]], batchExpectedOutputs: [[Double]]) -> Double {
+        var runningCostSum: Double = 0
+        
+        // calculate cost for each sample
+        for sampleIndex in 0..<batchInputs.count {
+            // get inputs/expected outputs
+            let inputs = batchInputs[sampleIndex]
+            let expectedOutputs = batchExpectedOutputs[sampleIndex]
+            let expectedOutputsMatrix = Matrix(elements: [expectedOutputs]).transpose()
+            
+            // calculate cost, add to runnign sum
+            let calculatedOutput = feed(inputs: inputs)
+            let sampleCost = cost(calculatedOutput, expectedOutputsMatrix)
+            
+            runningCostSum += sampleCost
+        }
+        
+        // take average cost
+        return runningCostSum / Double(batchInputs.count)
     }
     
     public func batchTrain(batchInputs: [[Double]], batchExpectedOutputs: [[Double]], η: Double) {
@@ -86,12 +117,12 @@ public class Network {
         
         // forward pass
         let expectedOutput = Matrix(elements: [expectedOutputs]).transpose()
-        var (allActivations, allSigmoidActivations) = internalFeed(inputs: inputs)
+        var (allActivations, allTransformedActivations) = internalFeed(inputs: inputs)
         
         // backpropagate
-        let errors = calculateErrors(allActivations: allActivations, allSigmoidActivations: allSigmoidActivations, expectedOutput: expectedOutput)
+        let errors = calculateErrors(allActivations: allActivations, allTransformedActivations: allTransformedActivations, expectedOutput: expectedOutput)
         
-        allSigmoidActivations.insert(Matrix(elements: [inputs]).transpose(), at: 0)
+        allTransformedActivations.insert(Matrix(elements: [inputs]).transpose(), at: 0)
         
         for (index, error) in errors.enumerated() {
             // calculate weight gradients
@@ -99,7 +130,7 @@ public class Network {
             let weightGradients = Matrix(rows: layer.rows, columns: layer.columns, repeating: 0)
             for row in 0..<weightGradients.rows {
                 for col in 0..<weightGradients.columns {
-                    weightGradients[row][col] = error[row][0] * allSigmoidActivations[index][col][0]
+                    weightGradients[row][col] = error[row][0] * allTransformedActivations[index][col][0]
                 }
             }
             
@@ -114,10 +145,10 @@ public class Network {
         return (allWeightGradients, allBiasGradients)
     }
     
-    private func calculateErrors(allActivations: [Matrix], allSigmoidActivations: [Matrix], expectedOutput: Matrix) -> [Matrix] {
+    private func calculateErrors(allActivations: [Matrix], allTransformedActivations: [Matrix], expectedOutput: Matrix) -> [Matrix] {
         // cost error
         let activationDerivative = allActivations.last!.elementMap(transform: self.σPrime)
-        let outputError = (allSigmoidActivations.last! - expectedOutput).elementwiseProduct(matrix: activationDerivative)
+        let outputError = costPrime(allTransformedActivations.last!, expectedOutput).elementwiseProduct(matrix: activationDerivative)
         
         // layer errors
         var errors = [outputError]
@@ -126,9 +157,9 @@ public class Network {
             let layer = layers[index + 1].transpose()
             
             let activation = allActivations[index]
-            let activationSigmoidPrime = activation.elementMap(transform: self.σPrime)
+            let activationTransformationPrime = activation.elementMap(transform: self.σPrime)
             
-            let newError = (layer * previousError).elementwiseProduct(matrix: activationSigmoidPrime)
+            let newError = (layer * previousError).elementwiseProduct(matrix: activationTransformationPrime)
             errors.append(newError)
         }
         
