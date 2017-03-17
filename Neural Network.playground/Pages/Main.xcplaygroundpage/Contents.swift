@@ -14,6 +14,6 @@ for _ in 0...1000 {
     }
     
     cost = net.cost(batchInputs: inputs, batchExpectedOutputs: outputs)
-    net.batchTrain(batchInputs: inputs, batchExpectedOutputs: outputs, η: 0.5)
+    net.batchTrain(batchInputs: inputs, batchExpectedOutputs: outputs, η: 5)
     print("")
 }
