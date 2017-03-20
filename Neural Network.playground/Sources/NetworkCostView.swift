@@ -89,7 +89,7 @@ public class NetworkCostView: UIView {
             scrollView.leftAnchor.constraint(equalTo: leftAnchor),
             scrollView.rightAnchor.constraint(equalTo: rightAnchor),
             scrollView.topAnchor.constraint(equalTo: topAnchor),
-            scrollView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5)
+            scrollView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.75)
         ])
         
         // add main cost graph
