@@ -1,30 +1,34 @@
 import UIKit
 
 public class Graph: UIView {
-    var values: [Double] = []
-    var strokeColor: UIColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
-    var titleLabel: UILabel = {
+    // MARK: - Value properties
+    var minValue: Double?
+    var maxValue: Double?
+    var valueStreams: [UIColor:[Double]] = [:]
+    
+    
+    // MARK: - Label properties
+    private(set) var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         return label
     }()
-    var bottomLabel: UILabel = {
+    private(set) var bottomLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         return label
     }()
-    var topLabel: UILabel = {
+    private(set) var topLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .left
         return label
     }()
     
-    var minValue: Double?
-    var maxValue: Double?
     
+    // MARK: - Initialization
     public override init(frame: CGRect) {
         super.init(frame: frame)
         init2()
@@ -61,11 +65,59 @@ public class Graph: UIView {
         ])
     }
     
-    public func addValue(_ value: Double) {
-        values.append(value)
+    
+    // MARK: - Data logic
+    public func addValue(_ value: Double, stream: UIColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)) {
+        if valueStreams[stream] != nil {
+            valueStreams[stream]?.append(value)
+        }
+        else {
+            valueStreams[stream] = [value]
+        }
+        
         setNeedsDisplay()
     }
     
+    private func getMin() -> Double? {
+        var minValue: Double?
+        
+        for values in valueStreams.values {
+            guard let newMin = values.min() else {
+                continue
+            }
+            
+            if let previousMin = minValue {
+                minValue = min(previousMin, newMin)
+            }
+            else {
+                minValue = newMin
+            }
+        }
+        
+        return minValue
+    }
+    
+    private func getMax() -> Double? {
+        var maxValue: Double?
+        
+        for values in valueStreams.values {
+            guard let newMax = values.max() else {
+                continue
+            }
+            
+            if let previousMax = maxValue {
+                maxValue = max(previousMax, newMax)
+            }
+            else {
+                maxValue = newMax
+            }
+        }
+        
+        return maxValue
+    }
+    
+    
+    // MARK: - Drawing logic
     override public func draw(_ rect: CGRect) {
         super.draw(rect)
 
@@ -75,7 +127,7 @@ public class Graph: UIView {
         if let minValue = minValue {
             yMin = minValue
         }
-        else if let minValue = values.min() {
+        else if let minValue = getMin() {
             yMin = minValue
         }
         else {
@@ -85,7 +137,7 @@ public class Graph: UIView {
         if let maxValue = maxValue {
             yMax = maxValue
         }
-        else if let maxValue = values.max() {
+        else if let maxValue = getMax() {
             yMax = maxValue
         }
         else {
@@ -95,47 +147,48 @@ public class Graph: UIView {
         // update scales
         minValue = yMin
         maxValue = yMax
+        let range = yMax - yMin
         
         // update scale labels
         bottomLabel.text = String(format: "%.2f", yMin)
         topLabel.text = String(format: "%.2f", yMax)
         
-        // get range and number of points (index based)
-        let range = yMax - yMin
-        let xAxisCount = Double(values.count - 1)
-        
-        // calculate stride for faster/effecient drawing
-        let strideTo = CGFloat(values.count)
-        let strideBy = max(1, strideTo / bounds.width)
-        
-        // create path
-        let path = UIBezierPath()
-        for indexFloat in stride(from: 0, to: strideTo, by: strideBy) {
-            let index = Int(indexFloat)
-            let value = values[index]
+        for (strokeColor, values) in valueStreams {
+            let xAxisCount = Double(values.count - 1)
             
-            // get where the point lies in terms of width/height percentages
-            let xProportion = Double(index) / xAxisCount
-            let yProportion = (value - yMin) / range
+            // calculate stride for faster/effecient drawing
+            let strideTo = CGFloat(values.count)
+            let strideBy = max(1, strideTo / bounds.width)
             
-            // calculate true x and ys
-            let x = CGFloat(xProportion) * bounds.width
-            let y = CGFloat(1 - yProportion) * bounds.height
-            
-            
-            // create point and add to path
-            let point = CGPoint(x: x, y: y)
-            if index == 0 {
-                path.move(to: point)
+            // create path
+            let path = UIBezierPath()
+            for indexFloat in stride(from: 0, to: strideTo, by: strideBy) {
+                let index = Int(indexFloat)
+                let value = values[index]
+                
+                // get where the point lies in terms of width/height percentages
+                let xProportion = Double(index) / xAxisCount
+                let yProportion = (value - yMin) / range
+                
+                // calculate true x and ys
+                let x = CGFloat(xProportion) * bounds.width
+                let y = CGFloat(1 - yProportion) * bounds.height
+                
+                
+                // create point and add to path
+                let point = CGPoint(x: x, y: y)
+                if index == 0 {
+                    path.move(to: point)
+                }
+                else {
+                    path.addLine(to: point)
+                }
             }
-            else {
-                path.addLine(to: point)
-            }
+            
+            // stroke path
+            strokeColor.set()
+            path.lineWidth = 2
+            path.stroke()
         }
-        
-        // stroke path
-        strokeColor.set()
-        path.lineWidth = 2
-        path.stroke()
     }
 }

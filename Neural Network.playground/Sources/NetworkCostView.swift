@@ -2,7 +2,7 @@ import UIKit
 
 public class NetworkCostView: UIView {
     // MARK: - Graph properties
-    private let colors = [#colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1), #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1), #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1), #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)]
+    private let colors = [#colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1), #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1), #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1), #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1), #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1)]
     private let mainCostGraph: Graph = {
         let graph = Graph()
         graph.translatesAutoresizingMaskIntoConstraints = false
@@ -99,7 +99,6 @@ public class NetworkCostView: UIView {
         for index in 0..<inputs.count {
             let graph = Graph()
             graph.translatesAutoresizingMaskIntoConstraints = false
-            graph.strokeColor = colors[index % colors.count]
             graph.titleLabel.text = "Cost for \(inputs[index])"
             graph.minValue = 0
             
@@ -146,7 +145,8 @@ public class NetworkCostView: UIView {
             let inputs: [[Double]] = [input]
             let expectedOutputs: [[Double]] = [outputs[index]]
             let inputCost = network.cost(batchInputs: inputs, batchExpectedOutputs: expectedOutputs)
-            otherGraphs[index].addValue(inputCost)
+            otherGraphs[index].addValue(inputCost, stream: colors[index])
+            mainCostGraph.addValue(inputCost, stream: colors[index].withAlphaComponent(0.4))
         }
         
         return cost
