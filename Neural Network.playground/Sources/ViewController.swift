@@ -5,6 +5,9 @@ public class ViewController: UIViewController {
     private let mainCostGraph: Graph = {
         let graph = Graph()
         graph.translatesAutoresizingMaskIntoConstraints = false
+        graph.titleLabel.text = "Total Cost"
+        graph.minValue = 0
+        graph.maxValue = 1
         return graph
     }()
     private var otherGraphs: [Graph] = []
@@ -45,7 +48,8 @@ public class ViewController: UIViewController {
         for index in 0..<inputs.count {
             let graph = Graph()
             graph.translatesAutoresizingMaskIntoConstraints = false
-            graph.strokeColor = colors[index]
+            graph.strokeColor = colors[index % colors.count]
+            graph.titleLabel.text = "Cost for \(inputs[index])"
             otherGraphs.append(graph)
         }
         scrollViewPages.append(contentsOf: otherGraphs as [UIView])
@@ -90,7 +94,7 @@ public class ViewController: UIViewController {
         mainCostGraph.addValue(cost)
         
         for (index, input) in inputs.enumerated() {
-            let inputCost = net.feed(inputs: input)[0][0] - outputs[index][0]
+            let inputCost = pow(net.feed(inputs: input)[0][0] - outputs[index][0], 2) / 2
             otherGraphs[index].addValue(inputCost)
         }
         

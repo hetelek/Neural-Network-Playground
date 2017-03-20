@@ -3,6 +3,27 @@ import UIKit
 public class Graph: UIView {
     var values: [Double] = []
     var strokeColor: UIColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
+    var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        return label
+    }()
+    var bottomLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        return label
+    }()
+    var topLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
+        return label
+    }()
+    
+    var minValue: Double?
+    var maxValue: Double?
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -16,6 +37,25 @@ public class Graph: UIView {
     
     private func init2() {
         backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        
+        addSubview(titleLabel)
+        NSLayoutConstraint.activate([
+            titleLabel.leftAnchor.constraint(equalTo: leftAnchor),
+            titleLabel.rightAnchor.constraint(equalTo: rightAnchor),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10)
+        ])
+        
+        addSubview(topLabel)
+        NSLayoutConstraint.activate([
+            topLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+            topLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 5)
+        ])
+        
+        addSubview(bottomLabel)
+        NSLayoutConstraint.activate([
+            bottomLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 5),
+            bottomLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 5)
+        ])
     }
     
     public func addValue(_ value: Double) {
@@ -25,15 +65,34 @@ public class Graph: UIView {
     
     override public func draw(_ rect: CGRect) {
         super.draw(rect)
-        
-        // get extremes from values
-        guard let minValue = values.min(),
-            let maxValue = values.max() else {
-                return
+
+        // get or calculate scales
+        let yMin: Double
+        let yMax: Double
+        if let minValue = minValue,
+            let maxValue = maxValue {
+            yMin = minValue
+            yMax = maxValue
+        }
+        else if let minValue = values.min(),
+            let maxValue = values.max() {
+            yMin = minValue
+            yMax = maxValue
+        }
+        else {
+            return
         }
         
+        // update scales
+        minValue = yMin
+        maxValue = yMax
+        
+        // update scale labels
+        bottomLabel.text = String(format: "%.2f", yMin)
+        topLabel.text = String(format: "%.2f", yMax)
+        
         // get range and number of points (index based)
-        let range = maxValue - minValue
+        let range = yMax - yMin
         let xAxisCount = Double(values.count - 1)
         
         // calculate stride for faster/effecient drawing
@@ -48,11 +107,12 @@ public class Graph: UIView {
             
             // get where the point lies in terms of width/height percentages
             let xProportion = Double(index) / xAxisCount
-            let yProportion = (value - minValue) / range
+            let yProportion = (value - yMin) / range
             
             // calculate true x and ys
             let x = CGFloat(xProportion) * bounds.width
             let y = CGFloat(1 - yProportion) * bounds.height
+            
             
             // create point and add to path
             let point = CGPoint(x: x, y: y)
