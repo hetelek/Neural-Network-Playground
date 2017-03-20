@@ -38,7 +38,7 @@ public class ViewController: UIViewController {
             scrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
             scrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.7)
+            scrollView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5)
         ])
         
         // add main cost graph
