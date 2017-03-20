@@ -28,9 +28,8 @@ public class ViewController: UIViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
+        // main view setup
         view.backgroundColor = .white
-        
-        // add subviews
         view.addSubview(scrollView)
         
         // create constraints
