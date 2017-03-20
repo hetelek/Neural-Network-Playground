@@ -15,7 +15,7 @@ public class Graph: UIView {
     }
     
     private func init2() {
-        backgroundColor = .white
+        backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
     
     public func addValue(_ value: Double) {
@@ -66,6 +66,7 @@ public class Graph: UIView {
         
         // stroke path
         strokeColor.set()
+        path.lineWidth = 2
         path.stroke()
     }
 }
