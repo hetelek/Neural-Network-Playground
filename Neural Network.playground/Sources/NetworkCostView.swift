@@ -102,7 +102,9 @@ public class NetworkCostView: UIView {
         mainCostGraph.addValue(cost)
         
         for (index, input) in inputs.enumerated() {
-            let inputCost = pow(network.feed(inputs: input)[0][0] - outputs[index][0], 2) / 2
+            let inputs: [[Double]] = [input]
+            let expectedOutputs: [[Double]] = [outputs[index]]
+            let inputCost = network.cost(batchInputs: inputs, batchExpectedOutputs: expectedOutputs)
             otherGraphs[index].addValue(inputCost)
         }
         
