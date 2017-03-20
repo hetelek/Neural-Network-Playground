@@ -6,8 +6,6 @@ public class ViewController: UIViewController {
         let graph = Graph()
         graph.translatesAutoresizingMaskIntoConstraints = false
         graph.titleLabel.text = "Total Cost"
-        graph.minValue = 0
-        graph.maxValue = 1
         return graph
     }()
     private var otherGraphs: [Graph] = []
