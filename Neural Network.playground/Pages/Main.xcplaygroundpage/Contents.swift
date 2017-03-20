@@ -1,6 +1,5 @@
 import UIKit
 import PlaygroundSupport
-
 /*:
  ## Neural Networks in Swift
  This playground uses standard Swift operations to create a working and trainable neural network. Neural networks are very powerful when used properly, and can fit any mathematical function.
@@ -20,20 +19,17 @@ let network = Network(inputs: 2, structure: [2, 1])!
  */
 let inputs: [[Double]] = [[1, 1], [0, 1], [1, 0], [0, 0]]
 let outputs: [[Double]] = [[0], [1], [1], [0]]
-
 /*:
  Let's create a view that represents how well our network is doing. We are graphing the cost function. The cost function represents how far off we are from our desired outputs. A high cost function means that our network is not outputting what we're hoping for.
  */
 let frame = CGRect(x: 0, y: 0, width: 600, height: 700)
 let costView = NetworkCostView(frame: frame, network: network, inputs: inputs, outputs: outputs)
-
 /*:
  Our learning rate represents how quickly the network attempts to converge. A high learning rate converges quicker, but has a greater probability of missing the global minimum of the cost function (or end up increasing the cost!). A smaller learning rate more accurately converges, but takes more training steps.
  
  Mess with the learning rate and see how it affects the cost graphs.
  */
 costView.learningRate = 4
-
 /*:
  We now train our network with the hyperparameters defined above. Try different iteration counts to see how it affects learning.
  */
