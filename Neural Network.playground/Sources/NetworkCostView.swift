@@ -1,6 +1,6 @@
 import UIKit
 
-public class ViewController: UIViewController {
+public class NetworkCostView: UIView {
     private let colors = [#colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1), #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1), #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1), #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)]
     private let mainCostGraph: Graph = {
         let graph = Graph()
@@ -18,25 +18,34 @@ public class ViewController: UIViewController {
     }()
     private var scrollViewPages: [UIView] = []
     
-    public let net = Network(inputs: 2, structure: [2, 1])!
+    public let network = Network(inputs: 2, structure: [12, 1])!
     public let inputs: [[Double]] = [[1, 1], [1, 0], [0, 1], [0, 0]]
     public let outputs: [[Double]] = [[0], [1], [1], [0]]
     
-    // MARK: - View Controller Lifecycle
-    override public func viewDidLoad() {
-        super.viewDidLoad()
-        
+    
+    // MARK: - Initialization
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        init2()
+    }
+    
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        init2()
+    }
+    
+    private func init2() {
         // main view setup
-        view.backgroundColor = .white
-        view.addSubview(scrollView)
+        backgroundColor = .white
+        addSubview(scrollView)
         
         // create constraints
         NSLayoutConstraint.activate([
-            scrollView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            scrollView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5)
-        ])
+            scrollView.leftAnchor.constraint(equalTo: leftAnchor),
+            scrollView.rightAnchor.constraint(equalTo: rightAnchor),
+            scrollView.topAnchor.constraint(equalTo: topAnchor),
+            scrollView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5)
+            ])
         
         // add main cost graph
         scrollViewPages.append(mainCostGraph)
@@ -51,12 +60,13 @@ public class ViewController: UIViewController {
         }
         scrollViewPages.append(contentsOf: otherGraphs as [UIView])
     }
-    
-    public override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
+
+    public override func layoutSubviews() {
+        super.layoutSubviews()
         
         updateScrollView()
     }
+    
     
     // MARK: - Scroll view logic
     private func updateScrollView() {
@@ -80,18 +90,19 @@ public class ViewController: UIViewController {
         // update content size
         scrollView.contentSize.width = CGFloat(scrollViewPages.count) * scrollView.bounds.width
     }
+    
 
     // MARK: - Graph logic
     public func step() -> Double {
         // train the network
-        net.batchTrain(batchInputs: inputs, batchExpectedOutputs: outputs, η: 5)
+        network.batchTrain(batchInputs: inputs, batchExpectedOutputs: outputs, η: 5)
         
         // add cost to graph
-        let cost = net.cost(batchInputs: inputs, batchExpectedOutputs: outputs)
+        let cost = network.cost(batchInputs: inputs, batchExpectedOutputs: outputs)
         mainCostGraph.addValue(cost)
         
         for (index, input) in inputs.enumerated() {
-            let inputCost = pow(net.feed(inputs: input)[0][0] - outputs[index][0], 2) / 2
+            let inputCost = pow(network.feed(inputs: input)[0][0] - outputs[index][0], 2) / 2
             otherGraphs[index].addValue(inputCost)
         }
         

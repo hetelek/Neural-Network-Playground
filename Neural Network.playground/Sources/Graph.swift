@@ -42,7 +42,7 @@ public class Graph: UIView {
         NSLayoutConstraint.activate([
             titleLabel.leftAnchor.constraint(equalTo: leftAnchor),
             titleLabel.rightAnchor.constraint(equalTo: rightAnchor),
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 10)
+            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5)
         ])
         
         addSubview(topLabel)
@@ -53,7 +53,7 @@ public class Graph: UIView {
         
         addSubview(bottomLabel)
         NSLayoutConstraint.activate([
-            bottomLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 5),
+            bottomLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
             bottomLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 5)
         ])
     }
