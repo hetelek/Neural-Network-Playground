@@ -89,7 +89,7 @@ public class NetworkCostView: UIView {
             scrollView.leftAnchor.constraint(equalTo: leftAnchor),
             scrollView.rightAnchor.constraint(equalTo: rightAnchor),
             scrollView.topAnchor.constraint(equalTo: topAnchor),
-            scrollView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.75)
+            scrollView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.65)
         ])
         
         // add main cost graph
@@ -157,6 +157,10 @@ public class NetworkCostView: UIView {
 }
 
 extension NetworkCostView: UITableViewDataSource {
+    public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Outputs"
+    }
+    
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return inputs.count
     }
