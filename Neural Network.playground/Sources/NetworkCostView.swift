@@ -145,8 +145,11 @@ public class NetworkCostView: UIView {
             let inputs: [[Double]] = [input]
             let expectedOutputs: [[Double]] = [outputs[index]]
             let inputCost = network.cost(batchInputs: inputs, batchExpectedOutputs: expectedOutputs)
-            otherGraphs[index].addValue(inputCost, stream: colors[index])
-            mainCostGraph.addValue(inputCost, stream: colors[index].withAlphaComponent(0.4))
+            
+            // add cost to main graph and individuals
+            let errorColor = colors[index]
+            otherGraphs[index].addValue(inputCost, stream: errorColor)
+            mainCostGraph.addValue(inputCost, stream: errorColor.withAlphaComponent(0.2))
         }
         
         return cost
