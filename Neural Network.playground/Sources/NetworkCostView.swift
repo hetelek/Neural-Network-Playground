@@ -1,15 +1,19 @@
 import UIKit
 
 public class NetworkCostView: UIView {
+    // MARK: - Graph properties
     private let colors = [#colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1), #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1), #colorLiteral(red: 0.1215686277, green: 0.01176470611, blue: 0.4235294163, alpha: 1), #colorLiteral(red: 0.2745098174, green: 0.4862745106, blue: 0.1411764771, alpha: 1)]
     private let mainCostGraph: Graph = {
         let graph = Graph()
         graph.translatesAutoresizingMaskIntoConstraints = false
         graph.titleLabel.text = "Total Cost"
+        graph.minValue = 0
         return graph
     }()
     private var otherGraphs: [Graph] = []
     
+    
+    // MARK: - Scroll view properties
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -18,47 +22,57 @@ public class NetworkCostView: UIView {
     }()
     private var scrollViewPages: [UIView] = []
     
-    public let network = Network(inputs: 2, structure: [12, 1])!
-    public let inputs: [[Double]] = [[1, 1], [1, 0], [0, 1], [0, 0]]
-    public let outputs: [[Double]] = [[0], [1], [1], [0]]
+    
+    // MARK: - Tableview Properties
+    private var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
+    
+    
+    // MARK: - Network properties
+    public var network: Network
+    public var inputs: [[Double]]
+    public var outputs: [[Double]]
+    public var learningRate: Double = 1
     
     
     // MARK: - Initialization
-    public override init(frame: CGRect) {
+    public init(frame: CGRect, network: Network, inputs: [[Double]], outputs: [[Double]]) {
+        self.network = network
+        self.inputs = inputs
+        self.outputs = outputs
+        
         super.init(frame: frame)
         init2()
     }
     
+    public override init(frame: CGRect) {
+        fatalError("This initializer is not supported.")
+    }
+    
     required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        init2()
+        fatalError("This initializer is not supported.")
     }
     
     private func init2() {
         // main view setup
         backgroundColor = .white
+        
+        // scroll view setup
         addSubview(scrollView)
+        setupScrollView()
         
-        // create constraints
+        // table view setup
+        addSubview(tableView)
+        tableView.dataSource = self
         NSLayoutConstraint.activate([
-            scrollView.leftAnchor.constraint(equalTo: leftAnchor),
-            scrollView.rightAnchor.constraint(equalTo: rightAnchor),
-            scrollView.topAnchor.constraint(equalTo: topAnchor),
-            scrollView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5)
-            ])
-        
-        // add main cost graph
-        scrollViewPages.append(mainCostGraph)
-        
-        // create graph for each input
-        for index in 0..<inputs.count {
-            let graph = Graph()
-            graph.translatesAutoresizingMaskIntoConstraints = false
-            graph.strokeColor = colors[index % colors.count]
-            graph.titleLabel.text = "Cost for \(inputs[index])"
-            otherGraphs.append(graph)
-        }
-        scrollViewPages.append(contentsOf: otherGraphs as [UIView])
+            tableView.topAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            tableView.leftAnchor.constraint(equalTo: leftAnchor),
+            tableView.widthAnchor.constraint(equalTo: widthAnchor)
+        ])
     }
 
     public override func layoutSubviews() {
@@ -69,7 +83,33 @@ public class NetworkCostView: UIView {
     
     
     // MARK: - Scroll view logic
+    private func setupScrollView() {
+        // create constraints
+        NSLayoutConstraint.activate([
+            scrollView.leftAnchor.constraint(equalTo: leftAnchor),
+            scrollView.rightAnchor.constraint(equalTo: rightAnchor),
+            scrollView.topAnchor.constraint(equalTo: topAnchor),
+            scrollView.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.5)
+        ])
+        
+        // add main cost graph
+        scrollViewPages.append(mainCostGraph)
+        
+        // create graph for each input
+        for index in 0..<inputs.count {
+            let graph = Graph()
+            graph.translatesAutoresizingMaskIntoConstraints = false
+            graph.strokeColor = colors[index % colors.count]
+            graph.titleLabel.text = "Cost for \(inputs[index])"
+            graph.minValue = 0
+            
+            otherGraphs.append(graph)
+            scrollViewPages.append(graph)
+        }
+    }
+    
     private func updateScrollView() {
+        // clear subviews
         scrollView.subviews.forEach { $0.removeFromSuperview() }
         
         for (index, view) in scrollViewPages.enumerated() {
@@ -92,15 +132,16 @@ public class NetworkCostView: UIView {
     }
     
 
-    // MARK: - Graph logic
-    public func step() -> Double {
+    // MARK: - Network logic
+    public func train() -> Double {
         // train the network
-        network.batchTrain(batchInputs: inputs, batchExpectedOutputs: outputs, η: 5)
+        network.batchTrain(batchInputs: inputs, batchExpectedOutputs: outputs, η: learningRate)
         
         // add cost to graph
         let cost = network.cost(batchInputs: inputs, batchExpectedOutputs: outputs)
         mainCostGraph.addValue(cost)
         
+        // add costs for individual values
         for (index, input) in inputs.enumerated() {
             let inputs: [[Double]] = [input]
             let expectedOutputs: [[Double]] = [outputs[index]]
@@ -109,5 +150,23 @@ public class NetworkCostView: UIView {
         }
         
         return cost
+    }
+}
+
+extension NetworkCostView: UITableViewDataSource {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return inputs.count
+    }
+
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // feed network inputs
+        let input = inputs[indexPath.row]
+        let output = network.feed(inputs: input)
+        
+        // create cell with output
+        let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
+        cell.textLabel?.text = "\(input)"
+        cell.detailTextLabel?.text = "\(output)"
+        return cell
     }
 }

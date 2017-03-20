@@ -2,19 +2,17 @@ import Foundation
 import UIKit
 import PlaygroundSupport
 
-let costView = NetworkCostView(frame: CGRect(x: 0, y: 0, width: 600, height: 500))
+let network = Network(inputs: 2, structure: [2, 1])!
+let inputs: [[Double]] = [[1, 1], [0, 1], [1, 0], [0, 0]]
+let outputs: [[Double]] = [[0], [1], [1], [0]]
 
-let stepCount = 1000
-for _ in 0..<stepCount {
-    costView.step()
-}
+let frame = CGRect(x: 0, y: 0, width: 600, height: 500)
+let costView = NetworkCostView(frame: frame, network: network, inputs: inputs, outputs: outputs)
+costView.learningRate = 4
 
-for index in 0..<costView.inputs.count {
-    let input = costView.inputs[index]
-    let output = costView.outputs[index][0]
-    
-    let got = costView.network.feed(inputs: input)[0][0]
-    print("got \(got), expected \(output)")
+let trainCount = 1000
+for _ in 0..<trainCount {
+    costView.train()
 }
 
 PlaygroundPage.current.liveView = costView

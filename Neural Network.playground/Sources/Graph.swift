@@ -38,6 +38,7 @@ public class Graph: UIView {
     private func init2() {
         backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         
+        // title label
         addSubview(titleLabel)
         NSLayoutConstraint.activate([
             titleLabel.leftAnchor.constraint(equalTo: leftAnchor),
@@ -45,12 +46,14 @@ public class Graph: UIView {
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5)
         ])
         
+        // top scale label
         addSubview(topLabel)
         NSLayoutConstraint.activate([
             topLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5),
             topLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 5)
         ])
         
+        // bottom scale label
         addSubview(bottomLabel)
         NSLayoutConstraint.activate([
             bottomLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5),
@@ -66,17 +69,23 @@ public class Graph: UIView {
     override public func draw(_ rect: CGRect) {
         super.draw(rect)
 
-        // get or calculate scales
+        // get y axis scale
         let yMin: Double
         let yMax: Double
-        if let minValue = minValue,
-            let maxValue = maxValue {
+        if let minValue = minValue {
             yMin = minValue
+        }
+        else if let minValue = values.min() {
+            yMin = minValue
+        }
+        else {
+            return
+        }
+        
+        if let maxValue = maxValue {
             yMax = maxValue
         }
-        else if let minValue = values.min(),
-            let maxValue = values.max() {
-            yMin = minValue
+        else if let maxValue = values.max() {
             yMax = maxValue
         }
         else {
