@@ -5,7 +5,7 @@ import PlaygroundSupport
  ## Neural Networks in Swift
  This playground uses standard Swift operations to create a working and trainable neural network. Neural networks are very powerful when used properly, and can fit any mathematical function.
  
- This playground will show you the basics of neural networks, and how their behavior changes based on a variety of hyperparameters. Even though we only scratch the surface of what's possible here, these principles are the core of the most promising machine learning algorithms today.
+ This playground will show you the basics of neural networks, and how their behavior changes based on a variety of hyperparameters. Even though we only scratch the surface of what's possible here, these principles are at the core of the most promising machine learning algorithms today.
  
  ---
  Let's begin by creating our network.

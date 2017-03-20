@@ -27,6 +27,7 @@ public class NetworkCostView: UIView {
     private var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.allowsSelection = false
         return tableView
     }()
     
