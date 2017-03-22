@@ -63,6 +63,12 @@ public class Network {
     }
     
     public func batchTrain(batchInputs: [[Double]], batchExpectedOutputs: [[Double]], η: Double) {
+        // make sure we have something to train
+        guard batchInputs.count > 0,
+            batchInputs.count == batchExpectedOutputs.count else {
+            return
+        }
+        
         var weightGradients: [Matrix]!
         var biasGradients: [Matrix]!
         

@@ -92,11 +92,16 @@ public class InteractiveGraph: UIView {
             return
         }
         
+        // loop each x coordinate
         let path = UIBezierPath()
-        for x in 0..<Int(bounds.width) {
-            let y = Double(bounds.height) - continuousFunction(Double(x))
-            let point = CGPoint(x: CGFloat(x), y: CGFloat(y))
+        for x in stride(from: 0, to: bounds.width, by: 1) {
+            // calculate x and y
+            let xProportion = x / bounds.width
+            let yScaled = continuousFunction(Double(xProportion))
+            let y = Double(bounds.height) * (1 - yScaled)
             
+            // add point
+            let point = CGPoint(x: CGFloat(x), y: CGFloat(y))
             if x == 0 {
                 path.move(to: point)
             }
