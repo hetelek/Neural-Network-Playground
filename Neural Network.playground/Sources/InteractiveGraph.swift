@@ -60,9 +60,17 @@ public class InteractiveGraph: UIView {
     // MARK: - Gesture actions
     @objc private func receivedTap(gesture: UITapGestureRecognizer) {
         let location = gesture.location(in: self)
-        points.append(location)
-        delegate?.didAddPoint?(graph: self, newPoint: location)
+        
+        // scale the point from 0 to 1, make bottom left origin
+        let scaledX = location.x / bounds.width
+        let scaledY = 1 - location.y / bounds.height
+        let scaledLocation = CGPoint(x: scaledX, y: scaledY)
+        
+        // update array, inform delegate
+        points.append(scaledLocation)
+        delegate?.didAddPoint?(graph: self, newPoint: scaledLocation)
 
+        // force update the ui
         setNeedsDisplay()
     }
     
@@ -108,7 +116,12 @@ public class InteractiveGraph: UIView {
         let circleSize = CGSize(width: circleRadius * 2, height: circleRadius * 2)
         
         // add to context
-        for centerPoint in points {
+        for scaledPoint in points {
+            // scale x and y back to view size, make top left origin
+            let xProportion = scaledPoint.x
+            let yProportion = 1 - scaledPoint.y
+            let centerPoint = CGPoint(x: xProportion * bounds.width, y: yProportion * bounds.height)
+            
             // get (top left) location of circle
             let point = centerPoint.applying(pointTranslation)
             let location = CGRect(origin: point, size: circleSize)
