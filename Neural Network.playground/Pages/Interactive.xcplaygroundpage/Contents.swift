@@ -32,6 +32,8 @@ class InteractiveViewController: UIViewController, InteractiveGraphDelegate {
     // MARK: - InteractiveGraphDelegate
     func didAddPoint(graph: InteractiveGraph, newPoint: CGPoint) {
         print("new point: \(newPoint)")
+        
+        graph.continuousFunction = { sqrt($0) }
     }
 }
 
