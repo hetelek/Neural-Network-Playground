@@ -27,7 +27,7 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
             graph.leftAnchor.constraint(equalTo: view.leftAnchor),
             graph.rightAnchor.constraint(equalTo: view.rightAnchor),
             graph.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor),
-            graph.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 1)
+            graph.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor)
         ])
         graph.setNeedsDisplay()
     }
