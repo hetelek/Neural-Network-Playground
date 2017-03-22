@@ -1,7 +1,7 @@
 import UIKit
 import PlaygroundSupport
 
-class InteractiveViewController: UIViewController, InteractiveGraphDelegate {
+public class InteractiveViewController: UIViewController, InteractiveGraphDelegate {
     private var graph: InteractiveGraph = {
         let graph = InteractiveGraph()
         graph.translatesAutoresizingMaskIntoConstraints = false
@@ -9,8 +9,11 @@ class InteractiveViewController: UIViewController, InteractiveGraphDelegate {
     }()
     
     // MARK: - View Controller Lifecycle
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "Interactive View"
+        view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         
         view.addSubview(graph)
         setupInteractiveGraph()
@@ -30,7 +33,7 @@ class InteractiveViewController: UIViewController, InteractiveGraphDelegate {
     }
     
     // MARK: - InteractiveGraphDelegate
-    func didAddPoint(graph: InteractiveGraph, newPoint: CGPoint) {
+    public func didAddPoint(graph: InteractiveGraph, newPoint: CGPoint) {
         print("new point: \(newPoint)")
         
         graph.continuousFunction = { sqrt($0) }
@@ -38,4 +41,5 @@ class InteractiveViewController: UIViewController, InteractiveGraphDelegate {
 }
 
 let interactiveController = InteractiveViewController()
-PlaygroundPage.current.liveView = interactiveController
+let navigationController = UINavigationController(rootViewController: interactiveController)
+PlaygroundPage.current.liveView = navigationController
