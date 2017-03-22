@@ -10,7 +10,11 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
         return graph
     }()
     private lazy var trainBarButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(title: "Step 1000x", style: .plain, target: self, action: #selector(tappedTrainButton))
+        let button = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(tappedTrainButton))
+        return button
+    }()
+    private lazy var settingsBarButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.edit, target: self, action: #selector(tappedSettingsButton))
         return button
     }()
     private let activityIndicator: UIActivityIndicatorView = {
@@ -25,7 +29,6 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
         trainingQueue.maxConcurrentOperationCount = 1
         return trainingQueue
     }()
-    
     private let progressView: UIProgressView = {
         let progressView = UIProgressView(progressViewStyle: .bar)
         progressView.translatesAutoresizingMaskIntoConstraints = false
@@ -34,6 +37,7 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
     
     private var totalStepsTaken = 0
     private var totalStepsNeeded = 0
+    
     
     // MARK: - Public properties
     public var η: Double = 1
@@ -47,6 +51,7 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
         title = "Interactive View"
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         navigationItem.leftBarButtonItem = trainBarButton
+        navigationItem.rightBarButtonItem = settingsBarButton
         
         view.addSubview(graph)
         setupInteractiveGraph()
@@ -64,6 +69,10 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
     
     @objc private func tappedTrainButton() {
         trainNetwork(steps: 1000)
+    }
+    
+    @objc private func tappedSettingsButton() {
+        
     }
     
     // MARK: - Interactive graph logic
@@ -97,6 +106,7 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
     public func didAddPoint(graph: InteractiveGraph, newPoint: CGPoint) {
         print("point added")
     }
+    
     
     // MARK: - Network logic
     private func trainNetwork(steps: Int) {
