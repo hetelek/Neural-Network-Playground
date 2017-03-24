@@ -3,5 +3,6 @@
     <pages>
         <page name='Main'/>
         <page name='Interactive'/>
+        <page name='Real World'/>
     </pages>
 </playground>
