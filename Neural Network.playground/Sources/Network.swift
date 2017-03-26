@@ -36,6 +36,38 @@ public class Network {
         }
     }
     
+    public init(url: URL) {
+        guard let data = try? Data(contentsOf: url),
+            let string = String.init(data: data, encoding: .utf8) else {
+            fatalError("Cannot read given URL.")
+        }
+        
+        let components = string.components(separatedBy: "\n")
+        for (index, component) in components.enumerated() {
+            let numbers = component.components(separatedBy: ",")
+            guard numbers.count > 2 else {
+                continue
+            }
+            
+            let rows = Int(numbers[0])!
+            let columns = Int(numbers[1])!
+            let layer = Matrix(rows: rows, columns: columns)
+            
+            for (index, number) in numbers.dropFirst(2).enumerated() {
+                let row = index / columns
+                let column = index % columns
+                layer[row][column] = Double(number)!
+            }
+            
+            if index % 2 == 0 {
+                layers.append(layer)
+            }
+            else {
+                biases.append(layer)
+            }
+        }
+    }
+    
     public func feed(inputs: [Double]) -> Matrix {
         let (_, a) = internalFeed(inputs: inputs)
         return a.last!

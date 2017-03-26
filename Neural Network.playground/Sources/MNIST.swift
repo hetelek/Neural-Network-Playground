@@ -58,25 +58,22 @@ public class MNIST {
         columnCount = reader.readInt32()
     }
     
-    public func getImage() -> UIImage {
+    public func getImage() -> ([Double], UIImage) {
         let imageNumber = UInt64(arc4random_uniform(UInt32(imageCount)))
         let imageOffset = imageStartOffset + imageNumber * imageByteCount
         
         reader.goTo(offset: imageOffset)
-        return imageFromPixelData(pixels: reader.readBytes(count: Int(imageByteCount)), width: Int(columnCount), height: Int(rowCount))!
+        let pixels = reader.readBytes(count: Int(imageByteCount))
+        let pixelIntensity = pixels.map { Double($0) / 255.0 }
+        return (pixelIntensity, imageFromPixelData(pixels: pixels, width: Int(columnCount), height: Int(rowCount))!)
     }
     
     private func imageFromPixelData(pixels: Data, width: Int, height: Int) -> UIImage? {
         var extendedData = Data(capacity: pixels.count * 4)
         pixels.forEach { pixel in
-            extendedData.append(0)
+            extendedData.append(255)
             for _ in 0..<3 {
-                if pixel > 100 {
-                    extendedData.append(255)
-                }
-                else {
-                    extendedData.append(pixel)
-                }
+                extendedData.append(pixel)
             }
         }
         

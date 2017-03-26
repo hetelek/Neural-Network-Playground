@@ -179,5 +179,4 @@ public class Matrix: ExpressibleByArrayLiteral, CustomStringConvertible, Collect
             return "[ " + formattedElements + " ]"
         }
     }
-    
 }
