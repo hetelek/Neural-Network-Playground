@@ -52,6 +52,25 @@ public class Matrix: ExpressibleByArrayLiteral, CustomStringConvertible, Collect
         return sum
     }
     
+    public func max() -> (value: Double, row: Int, column: Int) {
+        var value: Double = 0
+        var valueRow = -1
+        var valueColumn = -1
+        
+        for row in 0..<rows {
+            for col in 0..<columns {
+                let newValue = self[row][col]
+                if newValue > value {
+                    value = newValue
+                    valueRow = row
+                    valueColumn = col
+                }
+            }
+        }
+        
+        return (value, valueRow, valueColumn)
+    }
+    
     
     // MARK: - Operators
     static private func applyOperation(lhs: Matrix, rhs: Matrix, operation: (Double, Double) -> Double) -> Matrix {

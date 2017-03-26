@@ -14,14 +14,6 @@ let url2 = Bundle.main.url(forResource: "mnist-network-weights", withExtension: 
 let network = Network(url: url2)
 let results = network.feed(inputs: intensity)
 
-var maxValueIndex = -1
-var maxValue: Double = 0
-for row in 0..<results.rows {
-    let value = results[row][0]
-    if value > maxValue {
-        maxValue = value
-        maxValueIndex = row
-    }
-}
 
-print("I think this is a \(maxValueIndex).")
+let (_, value, _) = results.max()
+print("I think this is a \(value).")
