@@ -14,7 +14,7 @@ public class NetworkCostView: UIView {
     
     
     // MARK: - Scroll view properties
-    private let scrollView: UIScrollView = {
+    fileprivate let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.isPagingEnabled = true
@@ -27,7 +27,6 @@ public class NetworkCostView: UIView {
     private var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.allowsSelection = false
         return tableView
     }()
     
@@ -129,7 +128,9 @@ public class NetworkCostView: UIView {
         }
         
         // update content size
-        scrollView.contentSize.width = CGFloat(scrollViewPages.count) * scrollView.bounds.width
+        var contentSize = scrollView.bounds.size
+        contentSize.width = CGFloat(scrollViewPages.count) * scrollView.bounds.width
+        scrollView.contentSize = contentSize
     }
     
 
@@ -177,6 +178,19 @@ extension NetworkCostView: UITableViewDataSource {
         cell.textLabel?.text = "\(input)"
         cell.detailTextLabel?.text = "\(output)"
         return cell
+    }
+    
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // calculate page location
+        let page = indexPath.row + 1
+        var rect = self.scrollView.bounds
+        rect.origin.x = CGFloat(page) * rect.width
+        
+        // scroll to page
+        scrollView.scrollRectToVisible(rect, animated: true)
+        
+        // deselect row
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
