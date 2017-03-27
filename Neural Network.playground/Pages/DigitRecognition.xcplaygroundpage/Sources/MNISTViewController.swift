@@ -13,6 +13,7 @@ public class MNISTViewController: UIViewController {
     private let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
     private let predictionLabel: UILabel = {
@@ -31,7 +32,9 @@ public class MNISTViewController: UIViewController {
         title = "Handwritten Digit Recognition"
         view.backgroundColor = .white
         
-        // image view setup
+        // image view setup (allow tapping to move to next image)
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(makeNewPrediction))
+        imageView.addGestureRecognizer(tapGestureRecognizer)
         view.addSubview(imageView)
         NSLayoutConstraint.activate([
             imageView.leftAnchor.constraint(equalTo: view.leftAnchor),
