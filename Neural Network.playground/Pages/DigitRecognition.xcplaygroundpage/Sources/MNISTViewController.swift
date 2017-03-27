@@ -71,6 +71,6 @@ public class MNISTViewController: UIViewController {
         
         // get network's prediction
         let (_, output, _) = mnistNetwork.feed(inputs: pixelIntensities).max()
-        predictionLabel.text = "I think this is the number \(output)."
+        predictionLabel.text = "The network thinks this is \(output)."
     }
 }
