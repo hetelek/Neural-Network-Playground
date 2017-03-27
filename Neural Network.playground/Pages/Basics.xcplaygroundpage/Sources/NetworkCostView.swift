@@ -205,7 +205,7 @@ extension NetworkCostView: UITableViewDelegate {
             leftLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
         
-        let rightLabel = createLabel("Output")
+        let rightLabel = createLabel("Network Output")
         view.addSubview(rightLabel)
         NSLayoutConstraint.activate([
             rightLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -labelPadding),
