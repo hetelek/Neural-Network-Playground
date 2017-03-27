@@ -7,8 +7,8 @@ import PlaygroundSupport
  
  In this Playground, we will:
  1. [Construct and train a neural network](Basics)
- 2. [Use a neural network to fit points](InteractiveFitting)
- 3. [Recognize handwritten digits](DigitRecognition)
+ 2. [Use a neural network to fit points](Interactive%20Fitting)
+ 3. [Recognize handwritten digits](Digit%20Recognition)
  
  ---
  
