@@ -2,7 +2,7 @@ import Foundation
 
 extension Double {
     // FROM: http://mathworld.wolfram.com/Box-MullerTransformation.html
-    static func randomNormal() -> Double {
+    public static func randomNormal() -> Double {
         let random1 = Double(arc4random()) / Double(UInt32.max)
         let random2 = Double(arc4random()) / Double(UInt32.max)
         
@@ -12,7 +12,7 @@ extension Double {
         return f1 * cos(f2)
     }
     
-    func roundTo(places: Int) -> Double {
+    public func roundTo(places: Int) -> Double {
         let divisor = pow(10.0, Double(places))
         return (self * divisor).rounded() / divisor
     }
