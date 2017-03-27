@@ -4,5 +4,6 @@
         <page name='Basics'/>
         <page name='Interactive Fitting'/>
         <page name='Digit Recognition'/>
+        <page name='Custom Digit Recognition'/>
     </pages>
 </playground>
