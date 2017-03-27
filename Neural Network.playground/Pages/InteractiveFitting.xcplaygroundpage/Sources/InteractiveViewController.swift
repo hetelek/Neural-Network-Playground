@@ -11,8 +11,8 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
         let button = UIBarButtonItem(title: "Train", style: .plain, target: self, action: #selector(tappedTrainButton))
         return button
     }()
-    private lazy var settingsBarButton: UIBarButtonItem = {
-        let button = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.edit, target: self, action: #selector(tappedSettingsButton))
+    private lazy var resetBarButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(tappedResetButton))
         return button
     }()
     private let activityIndicator: UIActivityIndicatorView = {
@@ -50,7 +50,7 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
         title = "Interactive View"
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         navigationItem.leftBarButtonItem = trainBarButton
-        navigationItem.rightBarButtonItem = settingsBarButton
+        navigationItem.rightBarButtonItem = resetBarButton
         
         view.addSubview(graph)
         setupInteractiveGraph()
@@ -63,15 +63,22 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
             progressView.leftAnchor.constraint(equalTo: view.leftAnchor),
             progressView.rightAnchor.constraint(equalTo: view.rightAnchor),
             progressView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor)
-            ])
+        ])
     }
     
     @objc private func tappedTrainButton() {
         trainNetwork(steps: 1000)
     }
     
-    @objc private func tappedSettingsButton() {
+    @objc private func tappedResetButton() {
+        // remove all points from graph
+        graph.points = []
         
+        // create new network to re-initialize weights
+        if let inputs = network?.inputs,
+            let structure = network?.structure {
+            network = Network(inputs: inputs, structure: structure)
+        }
     }
     
     
@@ -84,7 +91,7 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
             graph.rightAnchor.constraint(equalTo: view.rightAnchor),
             graph.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor),
             graph.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor)
-            ])
+        ])
         
         graph.continuousFunction = { x in
             guard let network = self.network else {
@@ -101,13 +108,13 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
         NSLayoutConstraint.activate([
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-            ])
+        ])
     }
     
     
     // MARK: - InteractiveGraphDelegate
     public func didAddPoint(graph: InteractiveGraph, newPoint: CGPoint) {
-        print("point added")
+        
     }
     
     

@@ -4,22 +4,33 @@ public class Network {
     private(set) var layers: [Matrix] = []
     private(set) var biases: [Matrix] = []
     
-    var σ: (Double) -> Double = { x in
+    public var σ: (Double) -> Double = { x in
         return 1.0 / (1 + pow(M_E, -x))
     }
-    var σPrime: (Double) -> Double = { x in
+    public var σPrime: (Double) -> Double = { x in
         let sigmoidValue = 1.0 / (1 + pow(M_E, -x))
         return sigmoidValue * (1 - sigmoidValue)
     }
     
-    var cost: (Matrix, Matrix) -> Double = { calculated, expected in
+    public var cost: (Matrix, Matrix) -> Double = { calculated, expected in
         let difference = (calculated - expected) ^ 2
         let distanceFromExpected = sqrt(difference.sum())
         let cost = pow(distanceFromExpected, 2) / 2
         return cost
     }
-    var costPrime: (Matrix, Matrix) -> Matrix = { calculated, expected in
+    public var costPrime: (Matrix, Matrix) -> Matrix = { calculated, expected in
         return calculated - expected
+    }
+    
+    public var inputs: Int {
+        get {
+            return layers.first!.columns
+        }
+    }
+    public var structure: [Int] {
+        get {
+            return layers.map { $0.rows }
+        }
     }
     
     public init?(inputs: Int, structure: [Int]) {
