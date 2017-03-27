@@ -32,7 +32,7 @@ for _ in 0..<iterationCount {
     costView.train()
 }
 /*:
- If the network converged, it should be outputting the XOR gate and the cost should be near 0. If it failed to converge, try re-running or adjusting the learning rate.
+ If the network converged, it should be outputting the XOR gate and the cost should be near 0. If it failed to converge, try re-running. This sometimes happens due to chance.
  
  [Continue to Fitting to Points](@next)
  */
