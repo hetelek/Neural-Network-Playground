@@ -68,6 +68,7 @@ public class NetworkCostView: UIView {
         // table view setup
         addSubview(tableView)
         tableView.dataSource = self
+        tableView.delegate = self
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: scrollView.bottomAnchor),
             tableView.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -169,12 +170,49 @@ extension NetworkCostView: UITableViewDataSource {
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // feed network inputs
         let input = inputs[indexPath.row]
-        let output = network.feed(inputs: input)
+        let output = network.feed(inputs: input)[0][0].roundTo(places: 4)
         
         // create cell with output
         let cell = UITableViewCell(style: .value1, reuseIdentifier: nil)
         cell.textLabel?.text = "\(input)"
         cell.detailTextLabel?.text = "\(output)"
         return cell
+    }
+}
+
+extension NetworkCostView: UITableViewDelegate {
+    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        // create view
+        let view = UIView()
+        view.backgroundColor = UIColor(colorLiteralRed: 0.97, green: 0.97, blue: 0.97, alpha: 1)
+        
+        // block for creating labels
+        let createLabel: (String) -> UILabel = { text in
+            let label = UILabel()
+            label.font = UIFont.boldSystemFont(ofSize: 17)
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.text = text
+            return label
+        }
+        
+        // create left and right labels, pinned to their corresponding sides, centered vertically
+        let labelPadding: CGFloat = 20
+        
+        let leftLabel = createLabel("Input")
+        view.addSubview(leftLabel)
+        NSLayoutConstraint.activate([
+            leftLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: labelPadding),
+            leftLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
+        let rightLabel = createLabel("Output")
+        view.addSubview(rightLabel)
+        NSLayoutConstraint.activate([
+            rightLabel.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -labelPadding),
+            rightLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
+        
+        return view
     }
 }
