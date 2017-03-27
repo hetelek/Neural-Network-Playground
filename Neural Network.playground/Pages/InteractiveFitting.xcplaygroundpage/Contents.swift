@@ -14,8 +14,12 @@ let learningRate: Double = 15
 /*:
  [Continue to Digit Recognition](@next)
  */
+// Our network takes 1 input, has 2 hidden layers (15 hidden neurons first, then 5 hidden neurons), and outputs 1 value.
+let network = Network(inputs: 1, structure: [15, 5, 1])
+
+// Setup the view.
 let interactiveController = InteractiveViewController()
-interactiveController.network = Network(inputs: 1, structure: [15, 5, 1])
+interactiveController.network = network
 interactiveController.η = learningRate
 
 let navigationController = UINavigationController(rootViewController: interactiveController)
