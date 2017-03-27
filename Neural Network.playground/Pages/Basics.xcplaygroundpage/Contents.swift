@@ -1,14 +1,13 @@
 import UIKit
 import PlaygroundSupport
-
 /*:
  ## Neural Networks in Swift
  
  Neural networks allow us to solve problems using vast amounts of data. We can _train_ a neural network by feeding it many examples, allowing it to generalize and make future predictions.
  
  In this Playground, we will:
- 1. [Construct a neural networks](Basics)
- 2. [Train a neural network](InteractiveFitting)
+ 1. [Construct and train a neural network](Basics)
+ 2. [Use a neural network to fit points](InteractiveFitting)
  3. [Recognize handwritten digits](DigitRecognition)
  
  ---
@@ -37,6 +36,6 @@ for _ in 0..<iterationCount {
 /*:
  If the network converged, it should be outputting the XOR gate and the cost should be near 0. If it failed to converge, try re-running or adjusting the learning rate.
  
- [Continue to Training a Network](@next)
+ [Continue to Fitting to Points](@next)
  */
 PlaygroundPage.current.liveView = costView

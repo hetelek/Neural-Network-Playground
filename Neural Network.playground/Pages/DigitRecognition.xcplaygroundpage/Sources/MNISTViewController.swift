@@ -28,7 +28,7 @@ public class MNISTViewController: UIViewController {
         super.viewDidLoad()
         
         // main view setup
-        title = "Handwritting Prediction View"
+        title = "Handwritten Digit Recognition"
         view.backgroundColor = .white
         
         // image view setup
