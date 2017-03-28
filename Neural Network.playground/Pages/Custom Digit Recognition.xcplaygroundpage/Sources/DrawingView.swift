@@ -21,6 +21,7 @@ public class DrawingView: UIView {
     private let path: UIBezierPath = {
         let path = UIBezierPath()
         path.lineCapStyle = .round
+        path.lineJoinStyle = .round
         return path
     }()
     
