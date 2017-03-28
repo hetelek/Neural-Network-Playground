@@ -1,6 +1,7 @@
 import UIKit
 
 public class DrawingViewController: UIViewController, DrawingViewDelegate {
+    // MARK: - Private properties
     private let drawingView: DrawingView = {
         let drawingView = DrawingView()
         drawingView.translatesAutoresizingMaskIntoConstraints = false
@@ -18,6 +19,8 @@ public class DrawingViewController: UIViewController, DrawingViewDelegate {
         return Network(url: url)
     }()
     
+    
+    // MARK: - View Controller Lifecycle
     public override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -62,6 +65,8 @@ public class DrawingViewController: UIViewController, DrawingViewDelegate {
         drawingView.strokeWidth = strokeWidth
     }
     
+    
+    // MARK: - Delegate methods
     @objc private func clearDrawingView() {
         // clear view and reset label
         drawingView.clear()

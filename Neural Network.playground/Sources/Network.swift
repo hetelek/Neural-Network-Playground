@@ -1,9 +1,11 @@
 import Foundation
 
 public class Network {
+    // MARK: - Private properties
     private(set) var layers: [Matrix] = []
     private(set) var biases: [Matrix] = []
     
+    // MARK: - Public properties
     public var σ: (Double) -> Double = { x in
         return 1.0 / (1 + pow(M_E, -x))
     }
@@ -33,6 +35,8 @@ public class Network {
         }
     }
     
+    
+    // MARK: - Initalization
     public init?(inputs: Int, structure: [Int]) {
         guard let first = structure.first else {
             return nil
@@ -53,6 +57,7 @@ public class Network {
             fatalError("Cannot read given URL.")
         }
         
+        // parse the weights file
         let components = string.components(separatedBy: "\n")
         for (index, component) in components.enumerated() {
             let numbers = component.components(separatedBy: ",")
@@ -60,16 +65,19 @@ public class Network {
                 continue
             }
             
+            // get number of weights / matrix shape
             let rows = Int(numbers[0])!
             let columns = Int(numbers[1])!
             let layer = Matrix(rows: rows, columns: columns)
             
+            // populate matrix
             for (index, number) in numbers.dropFirst(2).enumerated() {
                 let row = index / columns
                 let column = index % columns
                 layer[row][column] = Double(number)!
             }
             
+            // evens are considered the neurons, odds are the bias
             if index % 2 == 0 {
                 layers.append(layer)
             }
@@ -79,6 +87,8 @@ public class Network {
         }
     }
     
+    
+    // MARK: - Feeding, Cost, Training
     public func feed(inputs: [Double]) -> Matrix {
         let (_, a) = internalFeed(inputs: inputs)
         return a.last!
@@ -115,6 +125,7 @@ public class Network {
         var weightGradients: [Matrix]!
         var biasGradients: [Matrix]!
         
+        // sum gradients from each sample
         for sampleIndex in 0..<batchInputs.count {
             let inputs = batchInputs[sampleIndex]
             let expectedOutputs = batchExpectedOutputs[sampleIndex]
@@ -159,6 +170,8 @@ public class Network {
         }
     }
     
+    
+    // MARK: - Back propagation calculations
     private func calculateGradients(inputs: [Double], expectedOutputs: [Double]) -> (weightGradients: [Matrix], biasGradients: [Matrix]) {
         // our return variables
         var allWeightGradients: [Matrix] = []
@@ -215,6 +228,8 @@ public class Network {
         return errors.reversed()
     }
     
+    
+    // MARK: - Forward propagation calculator
     private func internalFeed(inputs: [Double]) -> (z: [Matrix], a: [Matrix]) {
         var z: [Matrix] = []
         var a: [Matrix] = []

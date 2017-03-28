@@ -53,10 +53,12 @@ public class Matrix: ExpressibleByArrayLiteral, CustomStringConvertible, Collect
     }
     
     public func max() -> (value: Double, row: Int, column: Int) {
+        // inital values
         var value: Double = 0
         var valueRow = -1
         var valueColumn = -1
         
+        // loop through each value, update when we hit a new max
         for row in 0..<rows {
             for col in 0..<columns {
                 let newValue = self[row][col]

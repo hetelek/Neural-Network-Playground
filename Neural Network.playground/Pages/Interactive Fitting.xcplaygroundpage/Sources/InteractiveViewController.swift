@@ -52,12 +52,15 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
         navigationItem.leftBarButtonItem = trainBarButton
         navigationItem.rightBarButtonItem = resetBarButton
         
+        // setup interactive graph
         view.addSubview(graph)
         setupInteractiveGraph()
         
+        // setup activity indicator
         view.insertSubview(activityIndicator, aboveSubview: graph)
         setupActivityIndicator()
         
+        // setup progress bar
         view.insertSubview(progressView, aboveSubview: graph)
         NSLayoutConstraint.activate([
             progressView.leftAnchor.constraint(equalTo: view.leftAnchor),
