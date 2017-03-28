@@ -7,8 +7,8 @@ public class MNISTViewController: UIViewController {
         return MNIST(url: url)!
     }()
     private let mnistNetwork: Network = {
-        let url2 = Bundle.main.url(forResource: "mnist-network-weights", withExtension: nil)!
-        return Network(url: url2)
+        let url = Bundle.main.url(forResource: "mnist-network-weights", withExtension: nil)!
+        return Network(url: url)
     }()
     private let imageView: UIImageView = {
         let imageView = UIImageView()

@@ -1,5 +1,6 @@
 import UIKit
 import PlaygroundSupport
 
-let controller = DrawingViewController()
-PlaygroundPage.current.liveView = controller
+let drawingController = DrawingViewController()
+let navigationController = UINavigationController(rootViewController: drawingController)
+PlaygroundPage.current.liveView = navigationController
