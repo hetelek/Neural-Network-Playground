@@ -16,12 +16,12 @@ public class InteractiveGraph: UIView {
             setNeedsDisplay()
         }
     }
-    public var dotColor: UIColor = #colorLiteral(red: 0.3647058904, green: 0.06666667014, blue: 0.9686274529, alpha: 1) {
+    public var dotColor: UIColor = #colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1) {
         didSet {
             setNeedsDisplay()
         }
     }
-    public var strokeColor: UIColor = #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1) {
+    public var strokeColor: UIColor = #colorLiteral(red: 0.1019607857, green: 0.2784313858, blue: 0.400000006, alpha: 1) {
         didSet {
             setNeedsDisplay()
         }

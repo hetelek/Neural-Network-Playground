@@ -9,11 +9,11 @@ Additionally, I used the markup formatting that Swift playgrounds can render whi
 Finally, using UIKit, CoreGraphics, and my neural network class, I created an experience by adding interactivity and showing some real world examples. This was just as important as all the implementation details. This consisted mainly of building graphs and canvases to draw on.
 
 To answer the question, my project consisted mainly of:
--	Foundation / Standard programming operations
-  - OperationQueue
+- Foundation / Standard programming operations
+  - OperationQueue / DispatchQueue
   - FileHandle / Bundle / Data (for loading weights and images)
 
--	UIKit
+- UIKit
   - UIImage / UIImageView (for MNIST images)
   - UILabel
   - UIViewController
