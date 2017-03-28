@@ -1,16 +1,9 @@
 import UIKit
 import PlaygroundSupport
-/*:
- ## Neural Networks in Swift
+/*: 
+ ## Gate training
  
- Neural networks allow us to solve problems using vast amounts of data. We can _train_ a neural network by feeding it many examples, allowing it to generalize and make future predictions.
- 
- In this Playground, we will:
- 1. [Construct and train a neural network](Basics)
- 2. [Use a neural network to fit points](Interactive%20Fitting)
- 3. [Recognize handwritten digits](Digit%20Recognition)
- 
- ---
+ **This page is optional.**
  
  Let's begin by creating a network that takes 2 input values, has 2 hidden neurons, and outputs 1 value. We will also define the behavior we're looking for. Here, we are defining the XOR (exclusive-OR) gate. For example, given inputs [1, 1], the network should output 0 (or a close estimate). If you'd like, change the outputs to represent the AND or OR gate.
  */

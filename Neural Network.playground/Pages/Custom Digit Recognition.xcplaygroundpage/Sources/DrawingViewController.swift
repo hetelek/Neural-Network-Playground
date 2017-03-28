@@ -22,7 +22,7 @@ public class DrawingViewController: UIViewController, DrawingViewDelegate {
         super.viewDidLoad()
         
         // main view setup
-        title = "Draw Digit Recognition"
+        title = "Drawing Digits"
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         
         // setup drawing view
