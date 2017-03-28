@@ -10,6 +10,9 @@ import PlaygroundSupport
  
  **For the best performance, make sure the digit fills the space and is centered.**
  
+ ---
+ 
+ If you'd like to learn the basics of how the network is created, check out the [next page](@next) (**optional**).
  */
 
 let drawingController = DrawingViewController()

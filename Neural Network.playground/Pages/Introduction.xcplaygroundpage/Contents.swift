@@ -9,4 +9,6 @@
  3. [Draw some digits and have the network make a prediction](Custom%20Digit%20Recognition)
  
  The [last page](Gate%20Training) is optional, and shows how to construct and train a neural network.
+ 
+ [Continue to Interactive Fitting](Interactive%20Fitting)
  */
