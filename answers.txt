@@ -1,0 +1,44 @@
+Tell us about the features and technologies you used in your Swift playground.
+--
+The goal of my Swift playground was to create a neural network class that supported basic neural network operations. I wanted to show the power of neural networks and how they work without getting too technical. Even though iOS has some built in neural network libraries, I stayed away from them to prove it wasn’t a black box or super complex. I also thought it would be cool if I just did it myself.
+
+My playground uses Foundation, UIKit, CoreGraphics, and PlaygroundSupport. On top of those frameworks and standard Swift operations, I built a matrix class. Using that matrix class, I built a neural network class (which mostly consists of math). I also used the MNIST dataset (60,000 labeled images of handwritten digits) to train a neural network to detect handwritten digits. Collecting this data myself would’ve been outside the scope of the project.
+
+Additionally, I used the markup formatting that Swift playgrounds can render which made it easier to explain what was going on in the Live View. Because my project focuses on a very specific technology, I needed to take advantage of this to ensure that the user knew what was going on. I tried making it as relevant as possible, but this was difficult because I wasn’t sure how technical my audience would be.
+
+Finally, using UIKit, CoreGraphics, and my neural network class, I created an experience by adding interactivity and showing some real world examples. This was just as important as all the implementation details. This consisted mainly of building graphs and canvases to draw on.
+
+To answer the question, my project consisted mainly of:
+-	Foundation / Standard programming operations
+  - OperationQueue
+  - FileHandle / Bundle / Data (for loading weights and images)
+
+-	UIKit
+  - UIImage / UIImageView (for MNIST images)
+  - UILabel
+  - UIViewController
+  - UIView (including touch events)
+  - UITapGestureRecognizer
+  - Auto Layout
+  - UIColor
+  - UIProgressView
+  - UINavigationController
+  - UIBezierPath (for drawing on views)
+  - UIButton
+
+- CoreGraphics
+  - CGFloat / CGRect
+
+- PlaygroundSupport
+  - PlaygroundPage
+
+...and probably a couple more trivial ones.
+
+
+In what ways have you considered sharing your coding knowledge and enthusiasm for computer science with others?
+--
+
+
+
+Is there anything else you would like us to know?
+--
