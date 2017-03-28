@@ -65,7 +65,7 @@ public class MNIST {
         reader.goTo(offset: imageOffset)
         let pixels = reader.readBytes(count: Int(imageByteCount))
         let pixelIntensity = pixels.map { Double($0) / 255.0 }
-        print(pixelIntensity)
+        
         return (pixelIntensity, imageFromPixelData(pixels: pixels, width: Int(columnCount), height: Int(rowCount))!)
     }
     

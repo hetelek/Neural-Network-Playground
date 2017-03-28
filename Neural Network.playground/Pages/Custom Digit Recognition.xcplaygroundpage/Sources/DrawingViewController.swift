@@ -42,10 +42,6 @@ public class DrawingViewController: UIViewController, DrawingViewDelegate {
         drawingView.clear()
     }
     
-    public func didBeginDrawing() {
-        print("start")
-    }
-    
     public func didEndDrawing() {
         let image = UIImage(view: drawingView)
         let resized = image.resize(newSize: CGSize(width: 28, height: 28))

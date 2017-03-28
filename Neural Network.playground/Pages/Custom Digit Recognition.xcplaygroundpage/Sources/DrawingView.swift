@@ -1,8 +1,8 @@
 import UIKit
 
 @objc public protocol DrawingViewDelegate: class {
-    @objc func didBeginDrawing()
-    @objc func didEndDrawing()
+    @objc optional func didBeginDrawing()
+    @objc optional func didEndDrawing()
 }
 
 public class DrawingView: UIView {
@@ -50,7 +50,7 @@ public class DrawingView: UIView {
         }
         
         path.move(to: location)
-        delegate?.didBeginDrawing()
+        delegate?.didBeginDrawing?()
     }
     
     public override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -65,8 +65,7 @@ public class DrawingView: UIView {
     
     public override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
-        
-        delegate?.didEndDrawing()
+        delegate?.didEndDrawing?()
     }
     
     override public func draw(_ rect: CGRect) {
