@@ -44,9 +44,14 @@ I also try to stay up to date with the latest technologies and encourage others 
 Another way I share my coding knowledge and enthusiasm is by contributing to the open source community. I have lots of open source repositories on Github and always hope they are helping people learn.
 
 
+If you have extenuating circumstances that would require travel assistance in addition to the lodging already provided for scholarship recipients, let us know.
+--
+I can handle the traveling costs.
+
+
 Is there anything else you would like us to know?
 --
-Not knowing my target audience was the most difficult part of this project. I wasn’t sure how technical the person reviewing my Playground would be, so I had to take a guess and try and strike the right balance. I hope it isn’t too technical or not technical enough! One way I handled with this was by creating an “optional” last Playground page, which is more technical than the other pages.
+Not knowing my target audience was the most difficult part of this project. I wasn’t sure how technical the person reviewing my Playground would be, so I had to take a guess and try and strike the right balance. I hope it isn’t too technical or not technical enough! One way I handled with this was by making the last page “optional”, because it is more technical than the other pages.
 
 Also, the neural network and matrix implementations consist mainly of math. I’m not sure if this is considered a “feature or technology,” so I decided to leave it out of the first question. The neural network implementation was by far more math heavy, and consisted of lots of calculus (training a neural network is pretty much just the derivative chain-rule repeated many times - implementation can get confusing, though).
 
