@@ -37,8 +37,17 @@ To answer the question, my project consisted mainly of:
 
 In what ways have you considered sharing your coding knowledge and enthusiasm for computer science with others?
 --
+I regularly encourage others to try programming. One way I’ve done this in my local community was by helping build the high school computer science curriculum. I’ve also encouraged my friends to try programming, advising them to work on whatever they think is interesting. When doing this, I try to make it clear that it doesn’t have to be torture to learn how to code! I believe the best way to learn is to simply work on projects that interest you. This will make learning a fun experience rather than a burden.
 
+I also try to stay up to date with the latest technologies and encourage others to join me. I recently did this by offering a few friends to take an online class with me (“Machine Learning” on Coursera). We each watched the videos online on our own time, and met and discussed twice a week. This worked out very well and gave us all some exposure to machine learning.
+
+Another way I share my coding knowledge and enthusiasm is by contributing to the open source community. I have lots of open source repositories on Github and always hope they are helping people learn.
 
 
 Is there anything else you would like us to know?
 --
+Not knowing my target audience was the most difficult part of this project. I wasn’t sure how technical the person reviewing my Playground would be, so I had to take a guess and try and strike the right balance. I hope it isn’t too technical or not technical enough! One way I handled with this was by creating an “optional” last Playground page, which is more technical than the other pages.
+
+I have nearly every Apple product. I’ve been doing iOS programming for about 4 years now. I’ve been watching videos from the WWDC since 10th grade. I love Apple, and would really appreciate if I could go to the WWDC this year!
+
+Thanks for this opportunity!
