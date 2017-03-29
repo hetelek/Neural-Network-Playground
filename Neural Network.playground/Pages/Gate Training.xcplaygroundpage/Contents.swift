@@ -27,6 +27,6 @@ for _ in 0..<iterationCount {
 /*:
  If the network converged, it should be outputting the XOR gate and the cost should be near 0. If it failed to converge, try re-running. This sometimes happens due to chance.
  
- [Continue to Fitting to Points](@next)
+ [Go to Introduction](Introduction)
  */
 PlaygroundPage.current.liveView = costView

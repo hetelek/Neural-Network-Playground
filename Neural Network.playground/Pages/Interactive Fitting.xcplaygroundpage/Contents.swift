@@ -1,7 +1,7 @@
 import UIKit
 import PlaygroundSupport
 /*:
- [Back to Constructing a Neural Network](@previous)
+ [Back to Introduction](@previous)
  
  ## Fitting to Points
  
@@ -12,7 +12,7 @@ import PlaygroundSupport
 let learningRate: Double = 15
 
 /*:
- [Continue to Digit Recognition](@next)
+ [Continue to Handwritten Digit Recognition](@next)
  */
 // Our network takes 1 input, has 2 hidden layers (15 hidden neurons first, then 5 hidden neurons), and outputs 1 value.
 let network = Network(inputs: 1, structure: [15, 5, 1])
