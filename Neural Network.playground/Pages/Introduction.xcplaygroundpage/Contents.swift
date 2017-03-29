@@ -1,7 +1,7 @@
 /*:
  ## Neural Networks in Swift
  
- Neural networks allow us to solve problems using vast amounts of data. We can _train_ a neural network by feeding it many examples, allowing it to generalize and make future predictions.
+ Neural networks allow us to solve problems using vast amounts of data. We can train a neural network by feeding it many examples, allowing it to generalize and make future predictions.
  
  In this Playground, we will:
  1. [Use a neural network to fit points](Interactive%20Fitting)
