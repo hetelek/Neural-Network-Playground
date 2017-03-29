@@ -8,7 +8,7 @@ import PlaygroundSupport
  
  Keep in mind that the network is making guesses based on its training data. The images on the [previous page](@previous) give a good representation of the training data. The closer your drawings look to those, the better the network's guesses will get.
  
- **For the best performance, make sure the digit fills the space and is centered.**
+ **For the best performance, make sure the digit is centered and a reasonable size.**
  
  ---
  
