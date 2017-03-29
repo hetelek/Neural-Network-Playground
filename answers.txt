@@ -2,7 +2,7 @@ Tell us about the features and technologies you used in your Swift playground.
 --
 The goal of my Swift playground was to create a neural network class that supported basic neural network operations. I wanted to show the power of neural networks and how they work without getting too technical. Even though iOS has some built in neural network libraries, I stayed away from them to prove it wasn’t a black box or super complex. I also thought it would be cool if I just did it myself.
 
-My playground uses Foundation, UIKit, CoreGraphics, and PlaygroundSupport. On top of those frameworks and standard Swift operations, I built a matrix class. Using that matrix class, I built a neural network class (which mostly consists of math). I also used the MNIST dataset (60,000 labeled images of handwritten digits) to train a neural network to detect handwritten digits. Collecting this data myself would’ve been outside the scope of the project.
+My playground uses Foundation, UIKit, CoreGraphics, and PlaygroundSupport. On top of those frameworks and standard Swift operations, I built a matrix class. Using that matrix class, I built a neural network class. I also used the MNIST dataset (60,000 labeled images of handwritten digits) to train a neural network to detect handwritten digits. Collecting this data myself would’ve been outside the scope of the project.
 
 Additionally, I used the markup formatting that Swift playgrounds can render which made it easier to explain what was going on in the Live View. Because my project focuses on a very specific technology, I needed to take advantage of this to ensure that the user knew what was going on. I tried making it as relevant as possible, but this was difficult because I wasn’t sure how technical my audience would be.
 
@@ -43,6 +43,8 @@ I also try to stay up to date with the latest technologies and encourage others 
 
 Another way I share my coding knowledge and enthusiasm is by contributing to the open source community. I have lots of open source repositories on Github and always hope they are helping people learn.
 
+I also am considering making this playground into a short book. When I was first learning about neural networks, I was actually looking for something similar to this. I wanted a resource to explain the details of neural networks, and then allow me to interactive with them. This is especially applicable with neural networks because there are so many hyper-parameters that affect the way they learn and perform. I think taking this playground and focusing it on teaching people how neural networks work could benefit a lot of people.
+
 
 If you have extenuating circumstances that would require travel assistance in addition to the lodging already provided for scholarship recipients, let us know.
 --
@@ -51,11 +53,11 @@ I can handle the traveling costs.
 
 Is there anything else you would like us to know?
 --
-I have tested this Playground on an iPad Pro, but it should work on other devices.
+I have tested this playground on an iPad Pro and a MacBook Pro Retina, but it should work on other devices.
 
-Not knowing my target audience was the most difficult part of this project. I wasn’t sure how technical the person reviewing my Playground would be, so I had to take a guess and try and strike the right balance. I hope it isn’t too technical or not technical enough! One way I handled with this was by making the last page “optional”, because it is more technical than the other pages.
+Not knowing my target audience was the most difficult part of this project. I wasn’t sure how technical the person reviewing my playground would be, so I had to take a guess and try and strike the right balance. I hope it isn’t too technical or not technical enough! One way I handled this was by making the last page “optional”, because it is more technical than the other pages.
 
-Also, the neural network and matrix implementations consist mainly of math. I’m not sure if this is considered a “feature or technology,” so I decided to leave it out of the first question. The neural network implementation was by far more math heavy, and consisted of lots of calculus (training a neural network is pretty much just the derivative chain-rule repeated many times - implementation can get confusing, though).
+Also, the neural network and matrix implementations consist mainly of math. I’m not sure if this is considered a “feature or technology,” so I decided to leave it out of the first question even though it’s a large part of my project. The neural network implementation was by far the most math heavy, and consisted of lots of calculus (training a neural network is pretty much just the derivative chain-rule repeated many times).
 
 I have nearly every Apple product. I’ve been doing iOS programming for about 4 years now. I’ve been watching videos from the WWDC since 10th grade. I love Apple, and would really appreciate if I could go to the WWDC this year!
 

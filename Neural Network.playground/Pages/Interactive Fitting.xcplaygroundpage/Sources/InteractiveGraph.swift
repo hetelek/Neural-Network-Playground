@@ -38,13 +38,13 @@ public class InteractiveGraph: UIView {
     // MARK: - Private properties
     private var tapGesture = UITapGestureRecognizer()
     
+    
+    // MARK: - Initialization
     public override init(frame: CGRect) {
         super.init(frame: frame)
         init2()
     }
     
-    
-    // MARK: - Initialization
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         init2()
