@@ -48,6 +48,8 @@ Is there anything else you would like us to know?
 --
 Not knowing my target audience was the most difficult part of this project. I wasn’t sure how technical the person reviewing my Playground would be, so I had to take a guess and try and strike the right balance. I hope it isn’t too technical or not technical enough! One way I handled with this was by creating an “optional” last Playground page, which is more technical than the other pages.
 
+Also, the neural network and matrix implementations consist mainly of math. I’m not sure if this is considered a “feature or technology,” so I decided to leave it out of the first question. The neural network implementation was by far more math heavy, and consisted of lots of calculus (training a neural network is pretty much just the derivative chain-rule repeated many times - implementation can get confusing, though).
+
 I have nearly every Apple product. I’ve been doing iOS programming for about 4 years now. I’ve been watching videos from the WWDC since 10th grade. I love Apple, and would really appreciate if I could go to the WWDC this year!
 
 Thanks for this opportunity!
