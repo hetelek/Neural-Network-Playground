@@ -5,7 +5,7 @@ import PlaygroundSupport
  
  ## Fitting to Points
  
- Try plotting a few points by tapping the white area. Once you have a few points plotted, hit train a few times to see how the network "learns" to fit those points. As you add points, the amount of training needed will increase.
+ Try plotting a few points by tapping the white area. Once you have a few points plotted, hit train a couple times to see how the network "learns" to fit those points. As you add points, the amount of training needed will increase.
  
  Try changing the learning rate to see how it affects the network's learning:
  */
