@@ -51,6 +51,8 @@ I can handle the traveling costs.
 
 Is there anything else you would like us to know?
 --
+I have tested this Playground on an iPad Pro, but it should work on other devices.
+
 Not knowing my target audience was the most difficult part of this project. I wasn’t sure how technical the person reviewing my Playground would be, so I had to take a guess and try and strike the right balance. I hope it isn’t too technical or not technical enough! One way I handled with this was by making the last page “optional”, because it is more technical than the other pages.
 
 Also, the neural network and matrix implementations consist mainly of math. I’m not sure if this is considered a “feature or technology,” so I decided to leave it out of the first question. The neural network implementation was by far more math heavy, and consisted of lots of calculus (training a neural network is pretty much just the derivative chain-rule repeated many times - implementation can get confusing, though).
