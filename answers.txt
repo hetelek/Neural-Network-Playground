@@ -43,7 +43,7 @@ I also try to stay up to date with the latest technologies and encourage others 
 
 Another way I share my coding knowledge and enthusiasm is by contributing to the open source community. I have lots of open source repositories on Github and always hope they are helping people learn.
 
-I also am considering making this playground into a short book. When I was first learning about neural networks, I was actually looking for something similar to this. I wanted a resource to explain the details of neural networks, and then allow me to interactive with them. This is especially applicable with neural networks because there are so many hyper-parameters that affect the way they learn and perform. I think taking this playground and focusing it on teaching people how neural networks work could benefit a lot of people.
+I’m also considering making this playground into a short book. When I was first learning about neural networks, I was actually looking for something similar to this. I wanted a resource to explain the details of neural networks, and then allow me to interactive with them. This is especially applicable with neural networks because there are so many hyper-parameters that affect the way they learn and perform. I think taking this playground and focusing it on teaching people how neural networks work could benefit a lot of people.
 
 
 If you have extenuating circumstances that would require travel assistance in addition to the lodging already provided for scholarship recipients, let us know.
