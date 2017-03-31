@@ -266,14 +266,14 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
                     self.progressView.progress = 0
                     self.resetBarButton.isEnabled = true
                     self.activityIndicator.stopAnimating()
+                    
+                    // update helper text
+                    self.updateHelperText(text: "Try training again or resetting...", timeInterval: 5)
                 }
                 
                 // update graph
                 self.graph.graphContinuousFunction = true
                 self.graph.setNeedsDisplay()
-                
-                // update helper text
-                self.updateHelperText(text: "Try training again or resetting...", timeInterval: 5)
             }
         }
     }
