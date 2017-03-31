@@ -63,8 +63,8 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
         // main view setup
         title = "Interactive View"
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-        navigationItem.leftBarButtonItem = trainBarButton
-        navigationItem.rightBarButtonItem = resetBarButton
+        navigationItem.leftBarButtonItem = resetBarButton
+        navigationItem.rightBarButtonItem = trainBarButton
         
         // setup interactive graph
         view.addSubview(graph)
@@ -230,7 +230,6 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
     // MARK: - Network logic
     private func trainNetwork(steps: Int) {
         totalStepsNeeded += steps
-        graph.graphContinuousFunction = true
         
         trainingQueue.addOperation {
             guard let network = self.network else {
@@ -270,6 +269,7 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
                 }
                 
                 // update graph
+                self.graph.graphContinuousFunction = true
                 self.graph.setNeedsDisplay()
                 
                 // update helper text
