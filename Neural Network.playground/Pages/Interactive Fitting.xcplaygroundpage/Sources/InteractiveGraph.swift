@@ -31,6 +31,11 @@ public class InteractiveGraph: UIView {
             setNeedsDisplay()
         }
     }
+    public var graphContinuousFunction: Bool = true {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
     
     public weak var delegate: InteractiveGraphDelegate?
     
@@ -54,6 +59,7 @@ public class InteractiveGraph: UIView {
         tapGesture.addTarget(self, action: #selector(receivedTap))
         addGestureRecognizer(tapGesture)
         
+        isOpaque = true
         backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     }
     
@@ -82,7 +88,10 @@ public class InteractiveGraph: UIView {
         // we don't want to do anything if we have no context
         if let context = UIGraphicsGetCurrentContext() {
             drawPoints(context: context)
-            drawContinuousFunction()
+            
+            if graphContinuousFunction {
+                drawContinuousFunction()
+            }
         }
     }
     

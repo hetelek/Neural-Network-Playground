@@ -76,12 +76,15 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
     @objc private func tappedResetButton() {
         // remove all points from graph
         graph.points = []
+        graph.graphContinuousFunction = false
         
         // create new network to re-initialize weights
         if let inputs = network?.inputs,
             let structure = network?.structure {
             network = Network(inputs: inputs, structure: structure)
         }
+        
+        trainingQueue.cancelAllOperations()
     }
     
     
@@ -96,6 +99,7 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
             graph.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor)
         ])
         
+        graph.graphContinuousFunction = false
         graph.continuousFunction = { x in
             guard let network = self.network else {
                 return 0
@@ -103,8 +107,6 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
             let y = network.feed(inputs: [x])[0][0]
             return y
         }
-        
-        graph.setNeedsDisplay()
     }
     
     private func setupActivityIndicator() {
@@ -124,6 +126,7 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
     // MARK: - Network logic
     private func trainNetwork(steps: Int) {
         totalStepsNeeded += steps
+        graph.graphContinuousFunction = true
         
         trainingQueue.addOperation {
             guard let network = self.network else {
