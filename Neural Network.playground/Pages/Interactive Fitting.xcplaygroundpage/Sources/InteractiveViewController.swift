@@ -32,6 +32,20 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
         progressView.translatesAutoresizingMaskIntoConstraints = false
         return progressView
     }()
+    private let helperLabel: UILabel = {
+        let helperLabel = UILabel()
+        helperLabel.translatesAutoresizingMaskIntoConstraints = false
+        helperLabel.textAlignment = .center
+        helperLabel.textColor = .white
+        return helperLabel
+    }()
+    private let helperLabelContainer: UIView = {
+        let helperLabelContainer = UIView()
+        helperLabelContainer.translatesAutoresizingMaskIntoConstraints = false
+        helperLabelContainer.backgroundColor = .black
+        helperLabelContainer.alpha = 0.6
+        return helperLabelContainer
+    }()
     
     private var totalStepsTaken = 0
     private var totalStepsNeeded = 0
@@ -56,6 +70,10 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
         view.addSubview(graph)
         setupInteractiveGraph()
         
+        // setup interactive graph
+        view.addSubview(helperLabelContainer)
+        setupHelperContainerLabel()
+        
         // setup activity indicator
         view.insertSubview(activityIndicator, aboveSubview: graph)
         setupActivityIndicator()
@@ -70,6 +88,7 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
     }
     
     @objc private func tappedTrainButton() {
+        updateHelperText(text: "Training network...")
         trainNetwork(steps: 1000)
     }
     
@@ -84,7 +103,8 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
             network = Network(inputs: inputs, structure: structure)
         }
         
-        trainingQueue.cancelAllOperations()
+        // reset text
+        updateHelperText(text: "Tap to add some points...")
     }
     
     
@@ -116,10 +136,94 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
         ])
     }
     
+    private func setupHelperContainerLabel() {
+        helperLabelContainer.layer.cornerRadius = 5
+        
+        NSLayoutConstraint.activate([
+            helperLabelContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -10),
+            helperLabelContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
+        
+        helperLabelContainer.addSubview(helperLabel)
+        NSLayoutConstraint.activate([
+            helperLabel.centerXAnchor.constraint(equalTo: helperLabelContainer.centerXAnchor),
+            helperLabel.centerYAnchor.constraint(equalTo: helperLabelContainer.centerYAnchor),
+            helperLabelContainer.widthAnchor.constraint(equalTo: helperLabel.widthAnchor, constant: 50),
+            helperLabelContainer.heightAnchor.constraint(equalTo: helperLabel.heightAnchor, constant: 10)
+        ])
+        
+        updateHelperText(text: "Tap to add some points...")
+    }
+    
+    
+    // MARK: - UI logic
+    private func showHelperText(animate: Bool, completionHandler: (() -> Void)? = nil) {
+        if helperLabelContainer.alpha > 0 {
+            completionHandler?()
+        }
+        
+        let showContainerBlock: () -> Void = {
+            self.helperLabelContainer.alpha = 0.6
+        }
+        
+        if animate {
+            UIView.animate(withDuration: 0.2, animations: {
+                showContainerBlock()
+            }, completion: { _ in
+                completionHandler?()
+            })
+        }
+        else {
+            showContainerBlock()
+        }
+    }
+    
+    private func hideHelperText(animate: Bool, completionHandler: (() -> Void)? = nil) {
+        if helperLabelContainer.alpha == 0 {
+            completionHandler?()
+        }
+        
+        let hideContainerBlock: () -> Void = {
+            self.helperLabelContainer.alpha = 0
+        }
+        
+        if animate {
+            UIView.animate(withDuration: 0.2, animations: {
+                hideContainerBlock()
+            }, completion: { _ in
+                completionHandler?()
+            })
+        }
+        else {
+            hideContainerBlock()
+        }
+    }
+    
+    private func updateHelperText(text: String, timeInterval: TimeInterval? = nil) {
+        if text.isEmpty {
+            helperLabelContainer.isHidden = true
+        }
+        else {
+            helperLabel.text = text
+            self.showHelperText(animate: true) {
+                if let timeInterval = timeInterval {
+                    Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: false) { _ in
+                        self.hideHelperText(animate: true)
+                    }
+                }
+            }
+        }
+    }
+    
     
     // MARK: - InteractiveGraphDelegate
     public func didAddPoint(graph: InteractiveGraph, newPoint: CGPoint) {
-        
+        if graph.points.count < 4 {
+            updateHelperText(text: "Tap to add some points...")
+        }
+        else {
+            updateHelperText(text: "Tap \"Train\" to train the network.")
+        }
     }
     
     
@@ -167,6 +271,9 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
                 
                 // update graph
                 self.graph.setNeedsDisplay()
+                
+                // update helper text
+                self.updateHelperText(text: "Try training again or resetting...", timeInterval: 5)
             }
         }
     }
