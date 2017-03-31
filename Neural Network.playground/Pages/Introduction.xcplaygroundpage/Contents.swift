@@ -1,6 +1,8 @@
 /*:
  ## Neural Networks in Swift
  
+ **Goal:** Understand the basics of neural networks and their applications.
+ 
  Neural networks allow us to solve problems using vast amounts of data. We can train a neural network by feeding it many examples, allowing it to generalize and make future predictions.
  
  In this Playground, we will:
