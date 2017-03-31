@@ -4,7 +4,10 @@ import PlaygroundSupport
  [Back to Handwritten Digit Recognition](@previous)
  
  ## Drawing Digits
- Here you can try drawing your own digits and see how the network performs. You can see that it's not perfect, but works quite well for being so simple.
+ 
+ **Goal:** Draw a digit and have our network guess what it is.
+ 
+ Here you can try drawing your own digits and see how the network performs. You can see that it's not perfect, but works quite well for being so simple. If we were to use more advanced neural network techniques, we could bring the accuracy up to near-human performance.
  
  Keep in mind that the network is making guesses based on its training data. The images on the [previous page](@previous) give a good representation of the training data. The closer your drawings look to those, the better the network's guesses will get.
  

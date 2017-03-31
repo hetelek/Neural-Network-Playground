@@ -5,15 +5,16 @@ import PlaygroundSupport
  
  ## Fitting to Points
  
- Try plotting a few points by tapping the white area. Once you have a few points plotted, hit train a couple times to see how the network "learns" to fit those points. As you add points, the amount of training needed will increase.
+ **Goal:** Plot some points and train a neural network to fit those points.
  
- Try changing the learning rate to see how it affects the network's learning:
- */
+ Try plotting a few points by tapping the white area. Once you have a few points plotted, hit train a couple times to see how the network "learns" to fit those points. Train multiple times to get a more accurate fit.
+ 
+ [Continue to Handwritten Digit Recognition](@next)
+ 
+ You can try changing the learning rate to see how it affects the network's learning:
+*/
 let learningRate: Double = 15
 
-/*:
- [Continue to Handwritten Digit Recognition](@next)
- */
 // Our network takes 1 input, has 2 hidden layers (15 hidden neurons first, then 5 hidden neurons), and outputs 1 value.
 let network = Network(inputs: 1, structure: [15, 5, 1])
 

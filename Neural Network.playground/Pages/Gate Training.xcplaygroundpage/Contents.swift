@@ -5,6 +5,8 @@ import PlaygroundSupport
  
  **This page is optional.**
  
+ **Goal:** Construct and train a neural network to fit the XOR (exclusive-OR) gate.
+ 
  Let's begin by creating a network that takes 2 input values, has 2 hidden neurons, and outputs 1 value. We will also define the behavior we're looking for. Here, we are defining the XOR (exclusive-OR) gate. For example, given inputs [1, 1], the network should output 0 (or a close estimate). If you'd like, change the outputs to represent the AND or OR gate.
  */
 let network = Network(inputs: 2, structure: [2, 1])!
