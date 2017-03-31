@@ -136,6 +136,7 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
             // start animating
             DispatchQueue.main.sync {
                 self.activityIndicator.startAnimating()
+                self.resetBarButton.isEnabled = false
             }
             
             // get x and y points
@@ -160,6 +161,7 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
                     self.totalStepsTaken = 0
                     self.totalStepsNeeded = 0
                     self.progressView.progress = 0
+                    self.resetBarButton.isEnabled = true
                     self.activityIndicator.stopAnimating()
                 }
                 
