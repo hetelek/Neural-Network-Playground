@@ -6,8 +6,9 @@ This project uses iOS Playgrounds to display a working neural network. No extern
 ### Device Installation
 This is how I do it, but I'm sure there is a better way:
 1. Download or clone this repository.
-2. AirDrop the `Neural Network.playground` folder from your Mac to your device.
-3. Open the received playground in the Playground application.
+2. Install the [Swift Playgrounds app](https://itunes.apple.com/us/app/swift-playgrounds/id908519492?mt=8) on your device.
+3. AirDrop the `Neural Network.playground` folder from your Mac to your device.
+4. Open the received playground in the Playground application.
 
 
 ### Screenshots
