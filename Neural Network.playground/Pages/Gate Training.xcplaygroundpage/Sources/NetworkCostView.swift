@@ -198,7 +198,7 @@ extension NetworkCostView: UITableViewDelegate {
     public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         // create view
         let view = UIView()
-        view.backgroundColor = UIColor(colorLiteralRed: 0.97, green: 0.97, blue: 0.97, alpha: 1)
+        view.backgroundColor = UIColor(red: 0.97, green: 0.97, blue: 0.97, alpha: 1)
         
         // block for creating labels
         let createLabel: (String) -> UILabel = { text in

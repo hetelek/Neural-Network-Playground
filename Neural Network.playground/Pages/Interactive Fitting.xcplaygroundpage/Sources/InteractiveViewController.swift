@@ -16,7 +16,7 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
         return button
     }()
     private let activityIndicator: UIActivityIndicatorView = {
-        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        let activityIndicator = UIActivityIndicatorView(style: .gray)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.hidesWhenStopped = true
         return activityIndicator
@@ -81,9 +81,9 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
         // setup progress bar
         view.insertSubview(progressView, aboveSubview: graph)
         NSLayoutConstraint.activate([
-            progressView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            progressView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            progressView.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor)
+            progressView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor),
+            progressView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor),
+            progressView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
@@ -115,8 +115,8 @@ public class InteractiveViewController: UIViewController, InteractiveGraphDelega
         NSLayoutConstraint.activate([
             graph.leftAnchor.constraint(equalTo: view.leftAnchor),
             graph.rightAnchor.constraint(equalTo: view.rightAnchor),
-            graph.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor),
-            graph.bottomAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor)
+            graph.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            graph.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         
         graph.graphContinuousFunction = false
